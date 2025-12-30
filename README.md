@@ -65,8 +65,8 @@ Each endorsement from a person implies that the endorser, after an initial revie
 
 At the start of the experiment, the author has received two endorsements out of four requests - that is, 50% positive responses rate from the sample. In one case, the author received no response; in another, a direct refusal was given due to the author's lack of affiliation and the reputational risks that endorsing an unaffiliated researcher entails for a professor. I will continue to track endorsement statistics and publish them here until I pay the reward for the first part of the experiment.
 
-Endorsements requested: 4  
-Endorsements received: 2 (50% positive response rate)  
+Endorsements requested: 38  
+Endorsements received: 3 (7.89% positive response rate)  
 
 Upon completion of the experiment, all participants will be informed that they had been under covert observation.  
 
