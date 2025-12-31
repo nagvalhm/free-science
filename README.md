@@ -68,8 +68,8 @@ At the start of the experiment, the author has received two endorsements out of 
 Endorsements requested: 38  
 Endorsements received: 3 (7.89% positive response rate)  
 
-Honest refusals of endorsement: 2  
-Dishonest refusals of endorsement: 2  
+Honest refusals to endorse: 2  
+Dishonest refusals to endorse: 2  
 
 (By dishonest refusals I mean responses like "I can't, because I don't know you", or "you don't have affiliation, sorry")  
 
