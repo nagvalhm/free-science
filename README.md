@@ -68,7 +68,11 @@ At the start of the experiment, the author has received two endorsements out of 
 Endorsements requested: 38  
 Endorsements received: 3 (7.89% positive response rate)  
 
+Honest refusals of endorsement: 2  
+Dishonest refusals of endorsement: 2  
+
+(By dishonest refusals I mean responses like "I can't, because I don't know you", or "publish it in math journal first")  
+
 Upon completion of the experiment, all participants will be informed that they had been under covert observation.  
 
 This metric may reflect the result's potential demand.  
-(In the author's opinion, this metric may reflect the level of the community's acceptance of the result and its potential demand.)
