@@ -1,0 +1,1278 @@
+\documentclass[12pt]{article}
+\sloppy
+\hfuzz=10pt
+\tolerance=1000
+\usepackage{amsmath, amssymb}
+\usepackage{tikz-cd}
+\usepackage{relsize}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{example}[definition]{Example}
+\newtheorem*{lemmastar}{Lemma}
+
+\title{On Algebraic Integral}
+\author{Nikita Umerov}
+\date{October 17, 2025}
+
+\begin{document}
+
+\maketitle
+
+{\centering
+\noindent\textit{Preliminary version*}
+\par}
+
+\begin{abstract}
+We generalize the notion of integration from analysis to monoid actions, 
+establish a representation of regular integrals by bijective crossed-homomorphisms, 
+provide a complete classification of regular integrals over the real numbers, 
+and develop an algebraic method of integration.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+\noindent\textbf{Keywords:} algebraic integration, monoid action, near-ring, crossed homomorphism
+
+\vspace{5pt}
+\noindent\textbf{MSC2020:} 28A25, 20M30, 16Y30, 16Y60, 20J06
+
+\section*{Introduction}
+
+Contemporary algebra treats differentiation as a Leibniz rule operator in differential rings. 
+Yet numerous crucial derivatives — Radon-Nikodym derivatives in measure theory, 
+Boolean derivatives in logic, Fréchet derivative, and others — fall outside the Leibniz rule while satisfying the chain rule.
+
+\vspace{5pt}
+
+On the other hand, the algebraic theory of integration remains underdeveloped. 
+The Riemann integral and the antiderivative are connected by a bridge of the Newton-Leibniz formula, 
+which does not give sufficient algebraic generality, and all existing generalizations of the integral - 
+such as the Daniell integral or the Kurzweil–Henstock integral - in this or that way use the concept of a limit.
+
+\vspace{5pt}
+
+We take the chain rule as our starting point, observing that in functional form it coincides precisely with crossed-homomorphism under composition. This observation leads naturally to a unified framework where both Lebesgue integration and Boolean implication are examples of monoid actions.
+
+\vspace{5pt}
+
+This paper develops this observation into a holistic theory. We generalize integration to monoid actions, 
+prove basic theorems for crossed-homomorphisms in near-rings with commutative additive group, and provide 
+a complete classification of regular integrals over the real numbers. 
+Our framework unifies classical analysis, measure theory, and logical operations through a single algebraic perspective. A category-theoretic 
+interpretation of these structures is under development in the Appendix B.
+
+\vspace{5pt}
+
+The core idea of this article is so simple that a child could understand it. We propose that integration is an operation for which another operation satisfies the "expanding brackets rule". In other words, "integrality" is a relationship between operations opposite to distributivity.
+
+\vspace{5pt}
+
+This approach allows us to transfer the intuitive process of integration by substitution into the realm of pure algebra — as demonstrated in Lemma 4.8 — reducing it almost to the level of school arithmetic. This simplicity, however, is complicated by the absence of commutativity and left distributivity. The fixed points, to which Section 4 is devoted, help us overcome these complexities.
+
+\vspace{5pt}
+
+Nevertheless, behind the process of integration lies a surprising and beautiful algebraic world, and in this article, we attempt to lift the veil on it. And while the computations in it are numerous (owing to the author's meticulousness), each one is elementary in its own right. We trust the prepared reader will find pleasure in the proofs presented in the paper.
+
+\section{Preliminaries}
+
+
+
+\begin{definition}
+Let $\langle R, +, 0 \rangle$ be a monoid with identity element $0$ and $M$ a set. 
+We call a function a \textbf{left monoid action} $\triangleright : R \times M \to M$ if it satisfies the following axioms: 
+
+
+\begin{enumerate}
+\item $\forall m \in M: 0 \triangleright m = m$ \hfill (Identity axiom)
+\item $\forall f, g \in R, \forall m \in M: (f + g) \triangleright m = f \triangleright (g \triangleright m)$ \hfill (Associativity axiom)
+\end{enumerate}
+
+We call a left action $\triangleright$ \textbf{associative over} the operation $+$ 
+if it satisfies the associativity axiom.
+\end{definition}
+
+
+\begin{definition}
+Let $\langle R, *, 1 \rangle$ be a monoid with identity element $1$ and $M$ a set. 
+We call a function a \textbf{right monoid action} $\circ : R \times M \to M$ if it satisfies the following axioms:
+
+
+\begin{enumerate}
+\item $\forall m \in M:  m \circ 1 = m$
+\item $\forall f, g \in R, \forall m \in M: (m \circ f) \circ g = m \circ (f * g)$
+\end{enumerate}
+\end{definition}
+
+
+
+\begin{definition} We call $\langle R, +, * \rangle$ with an additive identity element $0$ a \textbf{right semiring} if:
+
+\begin{enumerate}
+\item $\langle R, + \rangle$ is a commutative monoid
+\item $\langle R, * \rangle$ is a monoid  
+\item $\forall f, g, h \in R: (f + g) * h = f * h + g * h$ 
+\end{enumerate}
+
+That is, a semiring that does not necessarily satisfy left distributivity.
+\end{definition}
+
+\vspace{5pt}
+\begin{definition} We call $\langle R, +, * \rangle$ a \textbf{right ring} (or \textbf{rring}) if it is a right semiring where $\langle R, + \rangle$ is a commutative group.  
+That is, a near-ring with unity where $\langle R, + \rangle$ is a commutative group.  
+That is, a ring with unity that does not necessarily satisfy left distributivity.
+\end{definition}
+
+
+\vspace{5pt}
+\begin{definition} Let $\langle R, +, * \rangle$ be a right semiring. We call a left action \textbf{regular} if:
+$\forall b, c \in R, \exists! a \in R: a \triangleright b = c$.
+\end{definition}
+
+\vspace{5pt}
+\begin{definition} Let $\langle R, +, * \rangle$ be a right semiring. We call an action of the monoid $\langle R, + \rangle$ on $R$ a \textbf{conjugation} by a bijection $g: R \to R$ if:
+$\forall a, b \in R: a \triangleright b = g(a + g^{-1}(b))$.
+\end{definition}
+
+
+\vspace{5pt}
+\begin{definition}  Let $\langle R, +, * \rangle$ be a right semiring. We call a map $f: R \to R$ a \textbf{crossed-homomorphism} of $R$ if it satisfies:
+$\forall a, b \in R: f(ab) = f(a)b + f(b)$.
+\end{definition}
+
+
+\section{Integral axioms}
+
+
+\begin{definition} Let $R$, $K$, $M$ be sets, and let $\langle R, +, 0 \rangle$ and $\langle K, *, 1 \rangle$ be monoids. Let:
+
+\begin{itemize}
+\item $\circ: M \times K \to M$ be a right action of $\langle K, * \rangle$ on $M$
+\item $\lhd: R \times K \to R$ be a right action of $\langle K, * \rangle$ on $R$
+\end{itemize}
+
+We call a left action $\triangleright: R \times M \to M$ of $\langle R, + \rangle$ is an \textbf{integral of $\langle R, + \rangle$ on $\langle M, \circ \rangle$ over $\langle K, *, \lhd \rangle$} if it satisfies the following axioms:
+
+\begin{enumerate}
+\item $\forall m \in M: 0 \triangleright m = m$ \hfill (Identity axiom)
+\item $\forall r, s \in R, \forall m \in M: (r + s) \triangleright m = r \triangleright (s \triangleright m)$ \hfill (Associativity axiom)
+\item $\forall r \in R, \forall k \in K, \forall m \in M: (r \triangleright m) \circ k = (r \lhd k) \triangleright (m \circ k)$ \hfill (Integral axiom)
+\end{enumerate}
+
+That is, a left action of $\langle R, +\rangle$ on $M$ satisfying the integral axiom.
+\end{definition}
+
+\vspace{10pt}
+\noindent\textbf{Remark.} \textit{Initially, the definition was proposed in the form of an integral of a semiring on a set, 
+which will appear later in the article and for which the Lebesgue integral served as motivation. 
+However, the case of set difference did not fit into the scheme where difference is both 
+distributive over join and is an action of join itself. Therefore, a generalization of the scheme 
+was required. A visual diagram illustrating the interaction of the actions 
+is presented in Appendix~A.}
+
+\vspace{10pt}
+\noindent\textit{Similarly, we define a left integral:}
+
+
+\begin{definition}
+
+Let $R$, $K$, $M$ be sets, and let $\langle R, +, 0 \rangle$ and $\langle K, *, 1 \rangle$ be monoids. Let:
+
+\begin{itemize}
+\item $\circ: M \times K \to M$ be a \textbf{left} action of $\langle K, * \rangle$ on $M$
+\item $\lhd: R \times K \to R$ be a \textbf{left} action of $\langle K, * \rangle$ on $R$
+\end{itemize}
+
+We call a left action $\triangleright: R \times M \to M$ of $\langle R, + \rangle$ is a \textbf{left integral of $\langle R, + \rangle$ on $\langle M, \circ \rangle$ over $\langle K, *, \lhd \rangle$} if it satisfies the following axioms:
+
+\begin{enumerate}
+\item $\forall m \in M: 0 \triangleright m = m$ \hfill (Identity axiom)
+\item $\forall r, s \in R, \forall m \in M: (r + s) \triangleright m = r \triangleright (s \triangleright m)$ \hfill (Associativity axiom)
+\item $\forall r \in R, \forall k \in K, \forall m \in M: k \circ (r \triangleright m) = (k \lhd r) \triangleright (k \circ m)$ \hfill (Integral axiom)
+\end{enumerate}
+\end{definition}
+
+
+\noindent\textbf{Remark.} All integrals $\triangleright$ of $\langle R, + \rangle$ on $\langle M, \circ \rangle$ over $\langle R, +, \lhd \rangle$ are degenerate for any $R, M,\lhd$, :
+
+\[
+\forall m \in M, \forall r \in R \quad m \circ r = (0 \triangleright m) \circ r = (0 \lhd r) \triangleright (m \circ r) = r \triangleright (m \circ r)
+\]
+
+
+since $\lhd$ is additive action. 
+
+\vspace{10pt}
+
+We consider such integrals degenerate and exclude them from consideration. Similarly for the left integral.  
+
+\newpage
+\begin{definition} Let $\langle R, +, * \rangle$ be a right semiring. We call an action $\triangleright$ an \textbf{integral of the right semiring $R$ on the set $\langle M, \circ \rangle$} if $\triangleright$ is an integral of the additive semigroup $\langle R, + \rangle$ on $\langle M, \circ \rangle$ over the multiplicative monoid $\langle R, *, * \rangle$ with right action on itself. That is, satisfies the following axioms:
+
+\begin{enumerate}
+\item $\forall m \in M: 0 \triangleright m = m$ \hfill (Identity axiom)
+\item $\forall f, g \in R, \forall m \in M: (f + g) \triangleright m = f \triangleright (g \triangleright m)$ \hfill (Associativity axiom)
+\item $\forall f, g \in R, \forall m \in M: (f \triangleright m) \circ g = (f * g) \triangleright (m \circ g)$ \hfill (Integral axiom)
+\end{enumerate}
+\end{definition}
+
+\vspace{10pt}
+\begin{definition} Let $\langle R, +, * \rangle$ be a right ring. We call an action $\triangleright$ an \textbf{integral of the right ring $R$ on the set $\langle M, \circ \rangle$} if $\langle R, +, * \rangle$ is right ring and action $\triangleright$ is integral of the right semiring R.
+\end{definition}
+
+\subsection{Examples of Integrals}
+
+\begin{enumerate}
+\item In any ring, \textbf{addition} is an integral of the ring on the multiplicative group.
+\item \textbf{Multiplication} is an integral of the rring of real-valued functions $\langle \mathbb{R}^{\mathbb{R}}\setminus\{0\}, *, \circ \rangle$ on the composition monoid $\langle \mathbb{R}^{\mathbb{R}}\setminus\{0\}, \circ \rangle$. 
+\item In a distributive lattice $\langle R, \vee, \wedge \rangle$, \textbf{join} is an integral of the lattice on the meet semilattice $\langle R, \wedge \rangle$.
+\item In a distributive lattice $\langle R, \wedge, \vee  \rangle$, \textbf{meet} is an integral of the lattice on the join semilattice $\langle R, \vee \rangle$.
+\item In a Boolean lattice $\langle R, \vee, \wedge \rangle$, \textbf{join} is an integral of the join semigroup $\langle R, \vee \rangle$ on $\langle R, \setminus \rangle$ over the join semigroup $\langle R, \vee, \setminus \rangle$ with set difference right monoid action.
+
+\item In a Boolean lattice $\langle R, \vee, \wedge \rangle$, \textbf{meet} is a \textbf{left integral} of the meet semigroup $\langle R, \wedge \rangle$ on $\langle R, \Rightarrow \rangle$ over the meet semigroup $\langle R, \wedge, \Rightarrow \rangle$
+with implication right monoid action.
+
+\item The \textbf{antiderivative} is an integral of the rring of diffeomorphisms $\langle C^1, *, \circ \rangle$ on the composition monoid $\langle C^1, \circ \rangle$.
+\end{enumerate}
+
+
+\vspace{10pt}
+\noindent\textbf{Remark.}\textit{
+It is straightforward to verify that implication and set difference 
+are generated by the complement operator, which can be viewed as 
+a crossed-homomorphism (which is equivalent to De Morgan's laws) - analogously, as crossed-homomorphisms generate regular integrals in rrings - as will be shown later in the paper.
+}
+
+\vspace{10pt}
+\subsection{Theorem 1. The Lebesgue Integral is an Algebraic Integral}
+The Lebesgue integral is an integral of the right ring of real-valued Borel automorphisms $\langle \mathcal{B}(\mathbb{R}), *, \circ \rangle$ — where $*$ denotes pointwise multiplication and $\circ$ denotes composition — on the set $\langle M, \circ \rangle$ of absolutely continuous measures with right action of $\langle \mathcal{B}(\mathbb{R}), \circ \rangle$ given by composition with image: $m \circ f = m(f[\cdot])$.
+
+\vspace{10pt}
+\noindent We first verify that the composition of a measure with the image of a Borel automorphism defines a right group action under composition.
+
+\vspace{5pt}
+
+\begin{lemma}  The operation $\circ$ defines a right group action of $\langle \mathcal{B}(\mathbb{R}), \circ \rangle$ on $M$.
+
+\begin{itemize}
+\item \textbf{Identity axiom}:  
+\[
+  (m \circ \mathrm{Id})(A) = m(\mathrm{Id}[A]) = m(A),
+\]
+  hence $m \circ \mathrm{Id} = m$.  
+
+\item \textbf{Associativity axiom}:  
+\[
+  ((m \circ f) \circ g)(A) = (m \circ f)(g[A]) = m(f[g[A]]) = m((f \circ g)[A]) = (m \circ (f \circ g))(A),
+\]
+so, $(m \circ f) \circ g = m \circ (f \circ g)$.  
+\end{itemize}
+
+As noted in \cite{bogachev2007}, the composition of a measure with the preimage of a measurable function is also a measure. The case for the image follows analogously for Borel automorphisms, since they are bijections with measurable inverses. $\square$  
+\end{lemma}
+
+
+\newpage
+\begin{lemma}  The Lebesgue integral defines a left monoid action of $\langle \mathcal{B}(\mathbb{R}), * \rangle$ on $M$.
+  
+\begin{itemize}
+\item \textbf{Identity axiom}: The Radon–Nikodym derivative of a measure with respect to itself is $1$, so  
+\[
+  1 \triangleright m = \int 1 \, dm = m.  
+\]
+\item \textbf{Associativity axiom}:  
+In fact, this is precisely the chain rule for Radon-Nikodym derivatives. Let us verify this. Let 
+
+\[
+v = g \triangleright m = \int g \, dm \quad \text{and} \quad n = f \triangleright v = \int f \, dv
+\]
+
+Then 
+
+\[
+f = \frac{dn}{dv}, g = \frac{dv}{dm}
+\]
+
+and $n \ll v \ll m$ (absolute continuity). By the chain rule for Radon–Nikodym derivatives,  
+
+\[
+  \frac{dn}{dm} = \frac{dn}{dv} \cdot \frac{dv}{dm} = f \cdot g,
+\]
+
+  hence  
+
+\[
+  n = \int f \cdot g \, dm = (f \cdot g) \triangleright m.
+\]
+
+  But also $n = f \triangleright (g \triangleright m)$, so  
+
+\[
+  f \triangleright (g \triangleright m) = (f \cdot g) \triangleright m,
+\]
+
+  which establishes associativity.  $\square$
+\end{itemize}
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma}  The Lebesgue integral satisfies the integral axiom over composition.
+
+\vspace{5pt}
+By the change of variables formula for Lebesgue integrals,  
+
+\[
+\int_A f \, d(m \circ g^{-1}) = \int_{g^{-1}[A]} (f \circ g) \, dm.
+\]
+
+In terms of the integral action, this reads  
+
+\[
+f \triangleright (m \circ g^{-1}) = ((f \circ g) \triangleright m) \circ g^{-1}.
+\]
+
+Let $h = g^{-1}$. Then  
+
+\[
+f \triangleright (m \circ h) = ((f \circ h^{-1}) \triangleright m) \circ h.
+\]
+
+Now set $t = f \circ h^{-1}$, so that $f = t \circ h$. Substituting yields  
+
+\[
+(t \circ h) \triangleright (m \circ h) = (t \triangleright m) \circ h,
+\]
+
+which is the required integral axiom. These substitutions are valid since all functions involved are Borel automorphisms.  $\square$
+\end{lemma}
+\vspace{5pt}
+
+Combining Lemmas 2.5–2.7, we conclude that $f \triangleright m = \int f \, dm$ is indeed an algebraic integral. $\blacksquare$
+
+\newpage
+\section{Representation Theorem and Crossed-homomorphisms}
+
+The following representation theorem establishes a correspondence between regular integrals and crossed-homomorphisms.
+
+\vspace{10pt}
+
+\begin{definition} Let $\langle R, +, * \rangle$ be a right ring. We call an integral $\triangleright$ a \textbf{regular integral of the rring $R$ on $\langle M, \circ \rangle$} if the action $\triangleright$ is regular.
+\end{definition}
+
+\vspace{10pt}
+
+\begin{definition} Let $\langle R, +, * \rangle$ be a right ring. We call an integral $\triangleright$ an \textbf{integral of the rring $R$ on $R$}, or simply an \textbf{integral of the rring $R$}, if $\triangleright$ is an integral of the rring $R$ on the multiplicative semigroup $\langle R, * \rangle$. 
+\end{definition}
+
+That is, $\triangleright$ is an integral of $\langle R, + \rangle$ on $\langle R, * \rangle$ over $\langle R, * \rangle$. 
+
+That is, if it satisfies the following axioms:
+
+\begin{enumerate}
+\item $\forall a \in R: 0 \triangleright a = a $ \hfill (Identity axiom)
+\item $\forall a, b, c \in R: (a + b) \triangleright c = a \triangleright (b \triangleright c) $ \hfill (Associativity axiom)
+\item $\forall a, b, c \in R: (a \triangleright b) * c = (a * c) \triangleright (b * c) $ \hfill (Integral axiom)
+\end{enumerate}
+
+\subsection{Theorem 2. Integral Representation Theorem.} 
+
+Let $\langle R, +, * \rangle$ be a right ring. There exists a canonical bijection $\phi$ between:
+
+\begin{itemize}
+\item Regular integrals $\triangleright$ of $R$ on $R$, and  
+\item Bijective crossed-homomorphisms $f \colon R \to R$,
+\end{itemize}
+
+\noindent given by conjugation:  
+
+\[
+\phi(f) = \left( a \triangleright b = f^{-1}\big(a + f(b)\big) \right).
+\]
+
+We call $f^{-1}$ the \textbf{integral function} of $\triangleright$.
+
+\vspace{10pt}
+\begin{lemma} Integral Function Lemma.  
+
+\vspace{5pt}
+\noindent If $f \colon R \to R$ is a bijective crossed-homomorphism, then $g = f^{-1}$ satisfies  
+\[
+\forall x, y \in R: \quad g(x) \cdot g(y) = g\big(x * g(y) + y\big).
+\]
+
+\noindent \textbf{Proof.}  For any $a, b \in R$, the crossed-homomorphism property gives  
+
+\[
+f(a \cdot b) = f(a) \cdot b + f(b).
+\]  
+
+\noindent Substitute $a = g(x)$, $b = g(y)$:  
+
+\[
+f\big(g(x) \cdot g(y)\big) = x \cdot g(y) + y.
+\]  
+
+\noindent Applying $g$ to both sides yields  
+
+\[
+g(x) \cdot g(y) = g\big(x \cdot g(y) + y\big). \quad \square
+\]
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma} $\phi$ is well-defined.
+
+\vspace{5pt}
+\noindent The action of $\langle R, +\rangle$ by conjugation with integral function $g$ is a regular integral.
+
+\vspace{5pt}
+\noindent\textbf{Proof.} Let $g$ be the integral function of some crossed-homomorphism on $R$. The integral function $g$ is a bijection by definition. A direct computation shows that conjugation by a bijection is a left group action satisfying the identity and associativity axioms. This follows from the associativity of the additive group.
+\vspace{10pt}
+\noindent Let us prove the regularity. Let $f = g^{-1}$ and take any $b, c \in R$. Solving  
+
+\[
+a \triangleright b = c \quad \Leftrightarrow \quad g(a + f(b)) = c \quad \Leftrightarrow \quad a = f(c) - f(b)
+\]  
+
+shows that for arbitrary $b, c$ there exists a unique $a$, hence the action is regular.
+
+\vspace{10pt}
+\noindent To verify the integral axiom, compute:  
+
+\[
+(a \triangleright b) \cdot c = g(a + f(b)) \cdot c = g(a + f(b)) \cdot g(f(c))
+\]  
+
+\noindent Applying Integral Function Lemma:  
+
+\[
+= g\big(\big[a + f(b)\big] \cdot g(f(c)) + f(c)\big) = g\big(\big[a + f(b)\big] \cdot c + f(c)\big)
+\]  
+
+\noindent By right distributivity:  
+
+\[
+= g\big(a \cdot c + f(b) \cdot c + f(c)\big)
+\]  
+
+\noindent Using the crossed-homomorphism property $f(b \cdot c) = f(b) \cdot c + f(c)$:  
+
+\[
+= g\big(a \cdot c + f(b \cdot c)\big) = (a \cdot c) \triangleright (b \cdot c). \quad \square
+\]
+\end{lemma}
+
+
+\vspace{10pt}
+\begin{lemma} Surjectivity of $\phi$.
+
+\vspace{5pt}
+\noindent Let $\triangleright$ be a regular integral on $R$. Then there exists an integral function generating it.
+
+\vspace{5pt}
+\noindent\textbf{Proof.} Let define $g(a) = a \triangleright 1$. Bijectivity of $g$ follows from regularity. Now observe:  
+
+\[
+g(a) \cdot g(b) = (a \triangleright 1) \cdot (b \triangleright 1)
+\]  
+
+\noindent By the integral axiom:  
+
+\[
+= \big(a \cdot (b \triangleright 1)\big) \triangleright (b \triangleright 1)
+\]  
+
+\noindent By the associativity axiom:  
+
+\[
+= \big(a \cdot (b \triangleright 1) + b\big) \triangleright 1 = g\big(a \cdot g(b) + b\big).
+\]  
+
+Thus $g$ satisfies the integral function identity. 
+The fact that the inverse function $f = g^{-1}$ is a crossed-homomorphism 
+follows by reversing the steps in Lemma 3.3.
+Therefore, the integral is indeed conjugation by a bijective crossed-homomorphism:
+\[
+g(a + f(b)) = (a + f(b)) \triangleright 1
+\] 
+\[
+= a \triangleright (f(b) \triangleright 1) = a \triangleright b,
+\]
+
+- by associativity, and since $f$ is inverse of $g$ $\square$
+
+
+
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma} Zero Lemma.  
+
+\vspace{10pt}
+\noindent For any crossed-homomorphism $f$, we have $f(1) = 0$.
+
+\vspace{5pt}
+\noindent\textbf{Proof.} Using the identity $f(ab) = f(a)b + f(b)$, take $b = 1$ and any $a \in R$:
+\[
+f(a \cdot 1) = f(a) \cdot 1 + f(1) \quad \Rightarrow \quad f(1) = 0. \quad \square
+\]
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma} Canonicity and Injectivity of $\phi$.
+
+\vspace{5pt}
+\noindent The integral function is unique for a given $\triangleright$, so the bijection $\phi$ is canonical.
+
+\vspace{5pt}
+\noindent\textbf{Proof.} Suppose $I \neq g$ is another integral function such that  
+
+\[
+a \triangleright b = I(a + I^{-1}(b)).
+\]  
+
+Then for all $a$:  
+
+\[
+a \triangleright I(0) = I(a + I^{-1}(I(0))) = I(a).
+\]  
+
+So $I(a) = a \triangleright I(0)$. By definition of integral function and Zero Lemma, $I(a) = a \triangleright 1$. 
+
+\vspace{5pt}
+Injectivity of $\phi$ is verified similarly: 
+
+\vspace{5pt}
+Suppose $\phi(f_1) = \phi(f_2)$, then for all $a, b \in R$,
+\[
+g_1(a + f_1(b)) = g_2(a + f_2(b))
+\]
+
+Substituting $b = 1$,
+\[
+g_1(a) = g_2(a) \ \forall a \in R,
+\]
+
+hence $f_1 = f_2$ by the definition of function equality and the definition of inverse functions. $\blacksquare$
+
+\end{lemma}
+
+\newpage
+\noindent\textbf{Remark.} The representation theorem applies in any near-ring with unity.
+
+\begin{definition} A bijective crossed-homomorphism $f$ is called a \textbf{crossed-homomorphism of the regular integral $\triangleright$} if $f = \phi^{-1}(\triangleright)$, where $\phi$ is the canonical bijection from Representation Theorem. Similarly, we say $\triangleright$ is the \textbf{integral of the bijective crossed-homomorphism $f$} if $\phi(f) = \triangleright$.
+\end{definition}
+
+\vspace{10pt}
+
+\noindent\textbf{Remark.} In a ring, both distributivity laws imply that multiplication by zero always yields zero: 
+$0 = a \cdot 0 = a \cdot (0 + 0) = a \cdot 0 + a \cdot 0$, which forces $a \cdot 0 = 0$ for all $a \in R$. 
+
+Hence, zero is the only element satisfying $0 \cdot a = 0$ for arbitrary $a \in R$. 
+In contrast, in a right ring, right multiplication by zero does not necessarily yield zero. On the other hand, we cannot rule out the existence of elements $c$ such that $c \cdot a = c$ for all $a$. 
+
+Such elements are called \textbf{constants} and form a two-sided ideal in the rring. 
+
+\begin{definition} Let $\langle R, +, * \rangle$ be a right ring. An element $c \in R$ is called a \textbf{constant} if for all $a \in R$, $c * a = c$.
+\end{definition}
+
+\vspace{5pt}
+\begin{lemma} Let $\langle R, +, * \rangle$ be a right ring. The constants form a two-sided ideal in $R$.
+
+\vspace{10pt}
+\noindent\textbf{Proof.} Let $C$ be the set of constants of $R$. Let $c, t \in C$, $a \in R$.
+
+First, we verify closure under multiplication. For left multiplication follows by definition. For right multiplication:
+
+\[
+\forall b \in R, (a * c) * b = a * (c * b) = a * c,
+\]
+
+hence $a * c$ is a constant.
+\vspace{10pt}
+From this it immediately follows that additive inverses belong to $C$:
+\[
+-c = (-1) * c \in C
+\]
+
+\vspace{10pt}
+\noindent $0$ belongs to $C$:
+\[
+0 * a = (0 + 0) * a = 0 * a + 0 * a,
+\]
+
+hence $0 * a = 0$.
+
+\vspace{10pt}
+\noindent Now we show that constants form an additive subgroup in $R$:
+\[
+(c + t) * a = c * a + t * a = c + t. \square
+\]
+\end{lemma}
+
+\vspace{10pt}
+However, factoring by this ideal is generally impossible due to the lack of left distributivity. On the other hand, we observe that right multiplication by zero is a constant.
+
+\vspace{10pt}
+\noindent As in the case of the "ordinary zero", the fact that constants "annihilate" elements does not imply that 
+the multiplication of two non-constant elements cannot equal a constant.
+
+\vspace{10pt}
+\noindent\textbf{Example:} 
+
+Let $f, g \in \mathbb{R}^{\mathbb{R}}$, $f(x) = x^2$, $g(x) = 1$ for $x \neq -1$ and $g(0) = -1$. Then $f \circ g = 1$.
+
+
+\vspace{10pt}
+\begin{definition} Let $\langle R, +, * \rangle$ be a right ring. Let $C$ be the ideal of constants. We call the right ring a \textbf{constant-prime domain} or \textbf{C-prime domain} if $C$ is a prime ideal.
+
+That is, for all $a, b \in R$, $a * b \in C$ implies $a \in C$ or $b \in C$.
+\end{definition}
+
+
+\vspace{10pt}
+\begin{definition} We call $\langle R, +, * \rangle$ a \textbf{division right ring} (or \textbf{division rring}) if it is a right ring and every nonconstant element $a \in R$ has a multiplicative inverse $a^{-1}$ such that: $a^{-1} * a = a * a^{-1} = 1.$  
+\end{definition}
+
+\vspace{10pt}
+\noindent\textbf{Remark.} Any division right ring is a C-prime domain.
+
+\vspace{5pt}
+ $a * b \in C \Rightarrow b = a^{-1} * (a * b) \in C$. The right case is analogous. $\square$
+
+\vspace{10pt}
+\noindent \textbf{Additionally}, we postulate the existence of an element $\infty \notin R$ such that:
+
+\[
+\infty + a = a + \infty = \infty \cdot a = \infty \quad \text{for all } a \in R,
+\]
+
+which implies that $\infty$ has no additive inverse.
+
+\newpage
+\noindent Most crossed-homomorphisms found in mathematical practice have a very simple form, as they are typically determined uniquely by their value at zero. However, this simplicity breaks down when crossed-homomorphisms take values outside the rring:
+
+
+\vspace{10pt}
+\begin{lemma} On trivial Crossed-homomorphisms.  
+
+\vspace{10pt}
+\noindent Let $\langle R, +, * \rangle$ be a rring with a left distributivity. If $f: R \to R$ is a crossed-homomorphism with $f(a) \neq \infty$, then $f$ has the form $f(x) = q_0(1 - x)$, where $q_0 = f(0)$.
+
+\vspace{5pt}
+\noindent\textbf{Proof.} Set $a = 0$ in the crossed-homomorphism identity:
+
+\[
+f(0 \cdot b) = f(0) \cdot b + f(b) \quad \Rightarrow \quad f(b) = f(0) - f(0) \cdot b = f(0)(1 - b). \quad 
+\]
+
+\vspace{5pt}
+This follows from left distributivity and the additive invertibility of im(f).$\square$
+\end{lemma}
+
+\vspace{10pt}
+Thus, in this case, the crossed-homomorphism is completely determined by its value at $0$.
+
+\vspace{10pt}
+\noindent\textbf{Remark.}This pattern holds for real-valued, matrix-valued, and crossed-homomorphisms over $\mathbb{Z}/n\mathbb{Z}$. We now turn to the more subtle case: what happens when a crossed-homomorphism has a singularity at zero and left distributivity is absent? And can it vanish at points other than $1$? The following result provides answers.
+
+\vspace{10pt}
+
+\subsection{Theorem 3. On Injectivity of Crossed-homomorphism.}   
+Let $\langle R, +, * \rangle$ be a division rring, C - ideal of its constants, and let $f, g: R \to R \cup \{\infty\}$ be crossed-homomorphisms with $\infty \notin R$. Let $K$ be a commutative submonoid of $\langle R, * \rangle$ such that $f(a), g(a) \ne \infty$ for all $a \in K$. Then:  
+
+\begin{enumerate}
+\item If $\exists q_0 \in K$ with $q_0 \neq 1$ and $f(q_0) = g(q_0)$, then $\mathrm{im}((f - g)|_K) \subset C$.
+\item If $\langle K, * \rangle$ is a commutative group with no constants and $f$ is not injective on $K$, then $\mathrm{im}(f|_K) \subset C$.
+\end{enumerate}
+
+\newpage
+\begin{lemma}  Let $h: R \to R \cup \{\infty\}$ be crossed-homomorphisms. Let $\exists q_0 \in K$ with $q_0 \neq 1$ and $h(q_0)=0.$ Then $\mathrm{im}(h|_K) \subset C$:
+
+\vspace{5pt}
+\noindent\textbf{Proof.} Take any $a \in K$. Then, by crossed-homomorphism property:
+
+\[
+h(a q_0) = h(a)q_0 + h(q_0) = h(a)q_0.
+\]
+
+\noindent On the other hand, since $K$ is commutative:
+
+\[
+h(a q_0) = h(q_0 a) = h(q_0)a + h(a) = h(a).
+\]
+
+\noindent Thus, $h(a)q_0 = h(a)$. Assume there exists $a \in K$ such that $h(a)$ is not a constant. Then, by the definition of a \textbf{division rring}, $h(a)$ is invertible and $q_0 = 1$, which contradicts the assumption $\square$. 
+\end{lemma}
+
+\vspace{10pt}
+\noindent\textbf{Proof of 1.}  Let $\exists q_0 \in K$ with $q_0 \neq 1$ and $f(q_0) = g(q_0)$.  
+Let $h = f - g$. We show $h$ is a crossed-homomorphism (i.e., crossed-homomorphisms form an additive group).  
+
+\[
+\forall a, b \in R \quad h(ab) = f(ab) - g(ab) = [f(a)b + f(b)] - [g(a)b + g(b)] = h(a)b + h(b),
+\]
+
+so $h$ is also a crossed-homomorphism. By construction, $h(q_0) = f(q_0)-g(q_0) = 0$.
+
+\vspace{5pt}
+\noindent Then, by lemma 3.14, $\mathrm{im}(h|_K) \subset C$. Hence $\mathrm{im}((f - g)|_K) \subset C$. $\square$
+
+
+\vspace{10pt}
+\noindent\textbf{Proof of 2.}  
+ Suppose $\langle K, * \rangle$ is a commutative group with no constants and $f$ is not injective on $K$, so $\exists a, b \in K$ such that $a \neq b$ and $f(a) = f(b)$. Then:
+
+\[
+f(ab^{-1}) = f(a)b^{-1} + f(b^{-1}) = f(b)b^{-1} + f(b^{-1}) = f(bb^{-1}) = f(1) = 0
+\]
+
+\noindent But $a \neq b$, so $ab^{-1} \neq 1$. by Lemma 3.14, $\mathrm{im}(f|_K) \subset C$. $\blacksquare$
+
+
+\vspace{10pt}
+\noindent\textbf{Remark.} However, in the rring $\langle C^1, *, \circ \rangle$ --- considering all functions to be locally invertible by choosing a branch of the inverse --- the differential operator maps outside the rring at the additive neutral element. In this context, the operator does not ``see" the ``usual zero", and for it, this situation is analogous to a singularity at infinity. Nevertheless, the extended basis $\{x^p : p \in \mathbb{Q}, \quad p \neq 0\}$ forms a commutative submonoid with no constants within $\langle C^1, \circ \rangle$, so by the Theorem On Injectivity of Crossed-homomorphism, any crossed-homomorphism on it is injective or maps into the ideal of constants.
+
+\vspace{5pt}
+In fact, the multiplicative structure of $\mathbb{Q}$ is carried over into this setting along with all associated crossed-homomorphisms, as evidenced by the identity:
+
+\[
+d(x^p \circ x^q) = d(x^p) \circ x^q \cdot d(x^q),
+\]
+
+which translates to
+
+\[
+\theta(pq) x^{\psi(pq)} = \theta(p) x^{\psi(p) q} \cdot \theta(q) x^{\psi(q)}.
+\]
+
+Here, $\psi$ takes the form $\psi(x) = q_0(1 - x)$ by the Lemma On trivial Crossed-homomorphisms, and $\theta$ is a homomorphism (a power function). However, such crossed-homomorphisms do not always extend linearly to the full rring $\langle C^1, *, \circ \rangle$, as seen from the more general equation:
+
+\[
+d(x^n \circ (x^m + x^t)) = d(x^n) \circ (x^m + x^t) \cdot d(x^m + x^t),
+\]
+
+where application of the binomial theorem for natural $n, m, t$ imposes further constraints.
+
+\vspace{5pt}
+This equation admits a unique family of solutions: $d(x^n) = n^k x^{n-1}$ for $\operatorname{Re}(k) \geq 0$. If the crossed-homomorphism property \textbf{extends to series} - \textbf{the following needs to be verified} - then, these correspond to crossed-homomorphisms arising from the regular integral of summation (by the Lemma On trivial Crossed-homomorphisms), with integral function $n \mapsto n+1$ and fixed point at $-\infty$ related to functions of the form:
+
+\[
+\sum_{n} \frac{x^n}{(n!)^k}
+\]
+
+However, all real crossed-homomorphisms except $d(x) = x - 1$ possess fixed points in $\mathbb{R}$, obtainable by solving $q(1 - x_0) = x_0$. Moreover, every regular integral on $\mathbb{R}$ takes the form
+
+\[
+x \triangleright y = \frac{x}{a} + y
+\]
+
+with integral function $I(x) = 1 - \frac{x}{a}$, as follows from the Integral Representation Theorem and the Lemma On trivial Crossed-homomorphisms.
+
+\section{Exponential Elements}
+
+
+\begin{definition} Let $\langle R, +, * \rangle$ be a right semiring and let $f: R \to R$ be a crossed-homomorphism. An element $e \in R$ is called an \textbf{exponential element of $f$} if it is a fixed point of $f$, i.e., $f(e) = e$ and $e$ is nonconstant.
+\end{definition}
+
+\subsection{Theorem 4. On Exponential Elements} 
+
+Let $\langle R, +, * \rangle$ be a division rring, C - ideal of its constants and let $f: R \to R \cup \{\infty\}$ be a crossed-homomorphism. Then $f$ has an exponential element \textbf{iff} the preimage $f^{-1}[\{-1\}]$ contains a nonconstant element. If $f$ is injective and $f^{-1}[\{-1\}] \notin C$ then the exponential element is unique.
+
+\vspace{10pt}
+\noindent\textbf{Proof.}  
+Suppose $p \in R \setminus C$ is an exponential element of $f$, so $f(p) = p$. Then  
+\[
+f(1) = f(p \cdot p^{-1}) = f(p)p^{-1} + f(p^{-1}) = p \cdot p^{-1} + f(p^{-1}) = 1 + f(p^{-1}).
+\]
+Since $f(1) = 0$ by the Zero Lemma, it follows that $f(p^{-1}) = -1$, hence $p^{-1} \in f^{-1}[\{-1\}]$ and $p^{-1}$ is nonconstant.
+
+\vspace{5pt}
+Conversely, suppose there exists a nonconstant $q \in R$ such that $f(q) = -1$.  Then  
+\[
+0 = f(1) = f(q^{-1} \cdot q) = f(q^{-1})q + f(q) = f(q^{-1})q - 1,
+\] 
+so $f(q^{-1})q = 1$, and thus $f(q^{-1}) = q^{-1}$. Therefore, $q^{-1}$ is an exponential element of $f$.
+
+\vspace{5pt}
+Now assume $f^{-1}[\{-1\}] \notin C$. If $f$ is injective, then the preimage of $-1$ is unique and nonconstant, so the exponential element $q^{-1}$ is unique.$\blacksquare$
+
+
+\vspace{10pt}
+\textbf{Example.} The crossed-homomorphism $f(x) = x - 1$ is bijective but has no exponential element, since $f^{-1}(-1) = \{0\}$. Its integral function is $g(x) = x + 1$, which maps $-1$ to $0$.
+
+\vspace{10pt}
+\textbf{Example.} In $\mathbb{Z}/6\mathbb{Z}$, the crossed-homomorphism $f(x) = 4(1 - x)$ has an exponential element $2$, since $f(2) = 2$. However, the preimage of $-1$ is empty because $2$ is not invertible.
+
+\vspace{10pt}
+
+\begin{definition} Let $\langle R, *, \circ \rangle$ be a right semiring. An element $e \in R$ is called an \textbf{exponential element of the integral} $\triangleright$ of R, if $e \triangleright 1 = e$ and $e$ is nonconstant.
+\end{definition}
+
+\subsection{Theorem 5. On Units}  
+
+Let $\langle R, +, * \rangle$ be a division rring, $C$ - ideal of its constants. A regular integral $\triangleright$ of $\langle R, +, * \rangle$ has an exponential element \textbf{iff} $(-1) \triangleright 1 \in R \setminus C$. If an exponential element exists, it is unique.
+
+\vspace{10pt}
+\noindent\textbf{Proof.} 
+By the Integral Representation Theorem, a regular integral corresponds to a unique bijective crossed-homomorphism $d$ and integral function $I$ satisfying $a \triangleright b = I(a + d(b))$.
+
+\vspace{5pt}
+Suppose $\triangleright$ has an exponential element $e$, i.e., $e \triangleright 1 = e$. Then:
+\[
+e \triangleright 1 = I(e + d(1)) = I(e)
+\]
+
+so $I(e) = e$. Since fixed points of a bijection are also fixed points of its inverse, $d(e) = e$. By the theorem on exponential elements, $e$ is unique and $d(e^{-1}) = -1$, hence $e^{-1} = I(-1) \notin C$.
+
+\vspace{5pt}
+Conversely, suppose $(-1) \triangleright 1 = a \notin C$. Then:
+
+\[
+I(-1 + d(1)) = I(-1) = a \notin C,
+\]
+so the preimage under $d$ is not in $C$. By the theorem on exponential elements, there exists a unique $e$ such that $d(e) = e$, and thus $I(e) = e = I(e + d(1)) = e \triangleright 1$. $\blacksquare$
+
+\vspace{10pt}
+\textbf{Corollary.} Summation is the unique regular integral on $\mathbb{R}$ such that for any $a \in \mathbb{R}$, $a \triangleright 1 \neq a$. $\square$
+
+
+\begin{definition} We call $\langle R, +, *, \circ \rangle$ a \textbf{triangular right ring} (or \textbf{triangular rring}) if:
+\begin{enumerate}
+\item $\langle R, +, * \rangle$ is a field with sum $+$, multiplication $*$, additive inverse $f \to -f$, multiplication inverse $f \to 1/f$, zero $0$ and unit $1$,
+\item $\langle R \setminus \{0\}, *, \circ \rangle$ is a division right ring with multiplication $*$, composition $\circ$, additive inverse $f \to 1/f$, multiplication inverse $f \to f^{-1}$, zero $1 \neq 0$ and nonconstant unit $\mathrm{id} \neq 1$.  
+\item Composition is right distributive over addition, that is:  
+
+\[
+\forall a, b, c \in R: (a + b) \circ c = a \circ c + b \circ c  
+\]
+
+\end{enumerate}
+\end{definition}
+
+\begin{definition} Let $\langle R, +, *, \circ \rangle$ be a triangular rring. We call an integral of the rring $\langle R, *, \circ \rangle$ of R \textbf{distributive} if it distributes over addition, that is satisfies the following axioms $\forall f, g, h \in R$:
+\begin{enumerate}
+\item $1 \triangleright h = h$ \hfill (identity axiom)  
+\item $(f * g) \triangleright h = f \triangleright (g \triangleright h)$ \hfill (associativity)  
+\item $(f \triangleright h) \circ g = (f \circ g) \triangleright (h \circ g)$ \hfill (integral axiom)  
+\item $(f + g) \triangleright h = (f \triangleright h) + (g \triangleright h)$ \hfill (distributivity)
+\end{enumerate}
+\end{definition}
+
+\subsection{Theorem 6. On Exponential Element of the Distributive Integral}
+
+Let $\langle R, +, *, \circ \rangle$ be a triangular rring and $C$ - Ideal of constants of $\langle R, *, \circ \rangle$. Let $\triangleright$ be a regular integral of the division rring $\langle R, *, \circ \rangle$ with an exponential element $e$. Then the following are equivalent for any $f, g \in R \setminus C$:
+
+\begin{enumerate}
+\item  $e \circ (f + g) = (e \circ f) + (e \circ g)$ \hfill (Exponential Additivity)
+\item  $f \cdot g = f \triangleright g + g \triangleright f$ \hfill (Leibniz Rule)
+\end{enumerate}
+
+
+\vspace{10pt}
+\noindent\textbf{Proof.}  Let $d$ and $I$ be the crossed-homomorphism and integral function of $\triangleright$ given by the Representation Theorem. Let $e$ be the exponential element and $\ln = e^{-1}$ its compositional inverse.
+
+\begin{lemma} $d$ and $I$ are additive.  
+
+\vspace{5pt}
+\noindent By distributivity:
+
+\[
+(f + g) \triangleright \mathrm{id} = (f \triangleright \mathrm{id}) + (g \triangleright \mathrm{id})
+\]
+
+\vspace{5pt}
+\noindent Using the representation $a \triangleright b = I(a \cdot d(b))$ and the unit lemma $d(\mathrm{id}) = 1$:
+
+\[
+I((f + g) \cdot d(id)) = I(f) + I(g) \Rightarrow I(f + g) = I(f) + I(g)
+\]
+
+\vspace{5pt}
+Additivity of $d$ follows from bijectivity. $\square$
+\end{lemma}
+
+\begin{lemma} $d(\ln) = 1/\mathrm{id}$ and $I(1/\mathrm{id}) = \ln$.  
+
+\vspace{5pt}
+\noindent Since $e$ is exponential:
+
+\[
+e = e \triangleright \mathrm{id} = I(e \cdot d(\mathrm{id})) = I(e)
+\]
+
+\vspace{5pt}
+Thus $d(e) = e$ by bijectivity. By Theorem on exponential elements, $d(e^{-1}) = 1/\mathrm{id}$ and $I(1/\mathrm{id}) = \ln$. $\square$
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma} Exponential Additivity $\Rightarrow$ Leibniz Rule.  
+
+\vspace{5pt}
+\noindent Suppose the exponential element $e$ is additive with respect to composition, i.e.,  
+
+\[
+\forall f, g \in R \setminus C \quad e \circ (f + g) = (e \circ f) + (e \circ g)
+\]
+
+\vspace{5pt}
+Since $\mathrm{ln}$ is its compositional inverse and by the associativity of composition, it follows directly that  
+
+\[
+\ln \circ (f \cdot g) = \ln \circ f + \ln \circ g
+\]
+
+\vspace{5pt}
+\noindent Applying the crossed-homomorphism $d$:
+
+\[
+d(\ln \circ (f \cdot g)) = d(\ln \circ f) + d(\ln \circ g)
+\]
+
+\vspace{5pt}
+\noindent Using the crossed-homomorphism property and Lemma 4.6:
+\[
+\frac{d(f \cdot g)}{f \cdot g} = \frac{d(f)}{f} + \frac{d(g)}{g}
+\]
+
+\vspace{5pt}
+\noindent Multiplying by $f \cdot g$:
+
+\[
+d(f \cdot g) = g \cdot d(f) + f \cdot d(g)
+\]
+
+\vspace{5pt}
+\noindent Applying the additive integral function $I$:
+
+\[
+f \cdot g = I(g \cdot d(f)) + I(f \cdot d(g)) = g \triangleright f + f \triangleright g \quad \square
+\]
+\end{lemma}
+
+\vspace{5pt}
+\begin{lemma} $\forall f \in R$, $(1/f) \triangleright f = \ln \circ f$.  
+
+\[
+(1/f) \triangleright f = ((1/\mathrm{id}) \circ f) \triangleright (\mathrm{id} \circ f)
+\]
+
+\vspace{5pt}
+\noindent By integral axiom and lemma 4.6,
+
+\[
+ = ((1/\mathrm{id}) \triangleright \mathrm{id}) \circ f = I((1/\mathrm{id}) \cdot d(\mathrm{id})) \circ f = \ln \circ f \quad \square
+\]
+\end{lemma}
+
+
+\begin{lemma} Leibniz Rule $\Rightarrow$ Exponential Additivity.  
+
+\vspace{5pt}
+\noindent Assume the Leibniz rule: $f \cdot g = f \triangleright g + g \triangleright f$ for all $f, g \in R \setminus C$. We show this implies exponential additivity.
+
+\vspace{10pt}
+\noindent Beginning from the equivalent form (as established in Lemma 4.7):
+
+\[
+d(f \cdot g) = g \cdot d(f) + f \cdot d(g)
+\]
+
+\vspace{5pt}
+\noindent Divide both sides by $f \cdot g$:
+
+\[
+\frac{d(f \cdot g)}{f \cdot g} = \frac{d(f)}{f} + \frac{d(g)}{g}
+\]
+
+\vspace{5pt}
+\noindent Apply the additive integral function $I$:
+
+\[
+I\left(\frac{d(f \cdot g)}{f \cdot g}\right) = I\left(\frac{d(f)}{f}\right) + I\left(\frac{d(g)}{g}\right)
+\]
+
+\vspace{5pt}
+\noindent By the integral representation $a \triangleright b = I(a \cdot d(b))$, this becomes:
+
+\[
+(1/fg) \triangleright (fg) = (1/f) \triangleright f + (1/g) \triangleright g
+\]
+
+\vspace{5pt}
+\noindent From Lemma 4.8, $(1/f) \triangleright f = \ln \circ f$ for any $f$, hence:
+
+\[
+\ln \circ (f \cdot g) = \ln \circ f + \ln \circ g
+\]
+
+\vspace{5pt}
+\noindent By associativity of composition and the inverse property $e \circ \ln = \mathrm{id}$:  
+
+\[
+e \circ (f + g) = (e \circ f) + (e \circ g)\quad \blacksquare
+\]
+
+\end{lemma}
+
+
+
+\newpage
+\section*{Conclusion}
+
+In conclusion, we must address the elephant in the room: the antiderivative is not regular—its integral function is not invertible, as the kernel of the differential operator is nontrivial. Within the framework developed here, we have not been able to rigorously characterize the precise sense in which the antiderivative is unique, and this remains a subject for further research.
+
+\vspace{10pt}
+In addition, allow us to define two more structures and justify the choice of names for the introduced concepts.
+
+\begin{definition} We call $\langle R, +, *, \circ, \triangleright \rangle$ a \textbf{square rring} if:
+\begin{itemize}
+\item $\langle R, +, *, \circ \rangle$ is a triangular rring
+\item $\triangleright$ is a distributive integral of the division right ring $\langle R, *, \circ \rangle$
+\end{itemize}
+\end{definition}
+
+\begin{definition} We call $\langle R, +, *, \circ, \triangleright \rangle$ a \textbf{square rring with exponent} if the integral $\triangleright$ has an exponential element $e \in R$ (i.e., $e \triangleright \mathrm{id} = e$). We denote such a square ring as:
+\[
+\langle R, +, *, \circ, \triangleright, 0, 1, \mathrm{id}, e \rangle
+\]
+\vspace{5pt}
+where $e$ is the \textbf{exponential element} and its compositional inverse, $\ln = e^{-1}$ is the \textbf{natural logarithm}.
+\end{definition}
+
+\vspace{10pt}
+\textbf{Remark.} If the crossed-homomorphism property extends to the formal power series, $\langle C^1, d \rangle$ forms a \textbf{square ring with exponent} with $d(x^n) = n^k x^{n-1}$ for $\operatorname{Re}(k) \geq 0$, otherwise, this holds only for $k = 1$.
+
+\vspace{10pt}
+The diagrams below illustrate distributivity and associativity relations between operations, where:
+\begin{itemize}
+\item Solid arrows $A \rightarrow B$ indicate operation $A$ distributes over $B$ (on at least one side)
+\item Dashed arrows $A \dashrightarrow B$ indicate $A$ is nontrivial associative over $B$
+\end{itemize}
+
+\vspace{10pt}
+
+\begin{figure}[h]
+\centering
+\begin{tikzcd}
+\circ \arrow[r] \arrow[rd] & * \arrow[d] \\
+& + 
+\end{tikzcd}
+\caption{$\langle R, +, *, \circ \rangle$}
+\end{figure}
+
+\vspace{10pt}
+
+\begin{figure}[h]
+\centering
+\begin{tikzcd}[row sep=large, column sep=large]
+\circ \arrow[r] \arrow[dr] \arrow[d] & * \arrow[d] \\
+\triangleright \arrow[ur, dashed] \arrow[r] & + 
+\end{tikzcd}
+\caption{$\langle R, +, *, \circ, \triangleright \rangle$}
+\end{figure}
+
+\vspace{10pt}
+
+\begin{figure}[h]
+\centering
+\begin{tikzcd}
+\Rightarrow \arrow[d] \arrow[d, dashed, shift right] & 
+\setminus \arrow[d] \arrow[d, dashed, shift left] \\
+\wedge \arrow[r, shift left=0.5ex] & \vee \arrow[l, shift left=0.5ex]
+\end{tikzcd}
+\caption{$\langle L,\vee, \wedge, \setminus, \Rightarrow \rangle$}
+\end{figure}
+
+\clearpage
+
+\newpage
+\section*{Acknowledgements}
+The author is grateful to the AI assistant DeepSeek for invaluable help in developing the concept, verifying proofs, and overcoming technical difficulties in the preparation of this work. The ongoing intellectual dialogue with the AI became a key part of the creative process.
+
+\vspace{5pt}
+This study demonstrates the potential of human-AI collaboration in fundamental research. Through real-time interaction, the author and the AI overcame logical impasses, found counterexamples, and refined mathematical formulations, which significantly accelerated the research process and the presentation of the results.
+
+
+\newpage
+\appendix
+\section*{Appendix A}
+\noindent The following diagram illustrates integral axiom. Arrows indicate group actions on sets, where:
+\begin{itemize}
+\item $\circ$ denotes the ``on'' action
+\item $\lhd$ denotes the ``over'' action  
+\end{itemize}
+which are actions of the semigroup $\langle K, * \rangle$ on the sets $M$ and $R$ respectively
+\begin{itemize}
+\item $\triangleright$ denotes the integral action of $\langle R, + \rangle$
+\end{itemize}
+ for the formula from the definition:
+
+$\forall r \in R, \forall k \in K, \forall m \in M: (r \triangleright m) \circ k = (r \lhd k) \triangleright (m \circ k)$
+
+\vspace{10pt}
+\begin{figure}[h]
+\centering
+\begin{tikzcd}
+& M & \\
+\langle R, + \rangle \arrow[ur, "\triangleright"] & & \langle K, *, \lhd \rangle \arrow[ll, "\lhd"'] \arrow[ul, "\circ"]
+\end{tikzcd}
+\caption{Actions diagram: $\triangleright$ (integral), $\lhd$ (over), $\circ$ (on)}
+\end{figure}
+
+
+\newpage
+\appendix
+\section*{Appendix B}
+
+We now define the weak universal property of the integral, which follows directly from the integral axiom.
+
+\subsection*{Weak Universal Property of the Integral.} 
+
+Let $\mathbf{Mon}$ be the category of monoids, and $\mathbf{Set}$ the category of sets. Consider:
+\begin{itemize}
+\item A monoid $(R,+,0)$ in $\mathbf{Mon}$,
+\item A monoid $(K,*,1)$ in $\mathbf{Mon}$,
+\item A set $M$ with:
+  \begin{itemize}
+  \item A right action $\circ: M \times K \to M$ of $K$,
+  \item A right action $\lhd: R \times K \to R$ of $K$ on $R$.
+  \end{itemize}
+\end{itemize}
+
+An \textbf{integral} is a left action $\triangleright: R \times M \to M$ of $R$ on $M$ such that the following diagram commutes for all $k \in K$:
+
+\[
+\begin{tikzcd}[row sep=3em, column sep=3em]
+M \arrow[r, "R_k", scale=1.5] \arrow[d, "L_r"', scale=1.5] & 
+M \arrow[d, "L_{r \lhd k}", scale=1.5] \\
+M \arrow[r, "R_k"', scale=1.5] & 
+M
+\end{tikzcd}
+\]
+
+\newpage
+\noindent where:
+\begin{itemize}
+\item $L_r(m) = r \triangleright m$ (left action of $R$),
+\item $R_k(m) = m \circ k$ (right action of $K$).
+\end{itemize}
+
+Equivalently, the integral is a natural transformation between the functors $L_{(-)}: R \to \mathrm{End}(M)$ and $L_{(- \lhd k)}: R \to \mathrm{End}(M)$ intertwining the right $K$-action.  
+This weak universal property characterizes integral $\triangleright$ as a left action making the $R$-action and $K$-action coherent.
+
+\vspace{10pt}
+
+\begin{lemmastar} The right ring $\mathbb{R}$ admits no strict universal regular integral.
+
+\vspace{5pt}
+\noindent Suppose there exists a continuous isomorphism $\gamma$ of regular integrals of $\mathbb{R}$:
+\[
+\gamma(x \triangleright_1 y) = \gamma(x) \triangleright_2 \gamma(y).
+\]
+By the Representation Theorem and the Lemma on trivial crossed-homomorphisms, let
+\[
+x \triangleright_1 y = x/a + y, \quad x \triangleright_2 y = x/b + y
+\]
+for some $a, b \in \mathbb{R}\setminus\{0\}$.
+
+\vspace{5pt}
+\noindent We show that $\gamma$ is additive. By assumption,
+\begin{equation}
+\gamma(x/a + y) = \gamma(x)/b + \gamma(y). \tag{1}
+\end{equation}
+Setting $x = 0$, $y = 0$ in (1), we obtain
+\begin{equation}
+\gamma(0) = \gamma(0)/b + \gamma(0) \quad \Rightarrow \quad \gamma(0) = 0. \tag{2}
+\end{equation}
+
+\noindent Now substitute $y = t/a$ in (1):
+\[
+\gamma(x/a + t/a) = \gamma(x)/b + \gamma(t/a).
+\]
+Setting $y = 0$ in (1) and applying (2):
+\[
+\gamma(x/a) = \gamma(x)/b.
+\]
+Thus,
+\[
+\gamma(x/a + t/a) = \gamma(x/a)*b/b + \gamma(t/a).
+\]
+\[
+\gamma(x/a + t/a) = \gamma(x/a) + \gamma(t/a).
+\]
+Hence, $\gamma$ is additive. All continuous additive functions on $\mathbb{R}$ have the form $\gamma(x) = kx$. Substituting into (1):
+\[
+k(x/a + y) = kx/b + ky.
+\]
+Since $\gamma$ is injective, $k \neq 0$, so
+\[
+x/a + y = x/b + y \quad \Rightarrow \quad a = b.
+\]
+
+Thus, we have constructed a counterexample showing that no continuous isomorphism exists that would make the arrow in the diagram above unique for integral of $\mathbb{R}$. $\square$
+\end{lemmastar}
+
+\vspace{5pt}
+The question of a \textbf{strict} universal property remains open: 
+what if the integral axiom presented in this article actually describes not the 
+integral itself, but a \textbf{pre-integral}, while a universal property 
+characterizing the ``true'' integral still exists? The main candidates for 
+the role of the ``true integral'' appear to be summation and the 
+distributive integral satisfying the Leibniz rule. We therefore pose 
+the question: does there exist a strict universal property that uniformly 
+generalizes both?
+
+\vspace{5pt}
+At first glance, the answer appears negative, since the distributive integral 
+satisfying the Leibniz rule requires additional structure in the form of a 
+\textbf{triangular ring}. However, we do not rule out the possibility that 
+both properties—distributivity and the Leibniz rule—could be formulated 
+in terms of composition and multiplication alone, leading to a corresponding refinement of the theory. 
+Such a refinement, however, requires the introduction of two-variable 
+functions, lies beyond the scope of this article, and also remains a subject 
+for future research.
+
+\newpage
+
+\renewcommand{\refname}{Bibliography} 
+
+\begin{thebibliography}{99}
+
+\bibitem{bogachev2007}
+Bogachev, Vladimir I. 
+\textit{Measure Theory}. 
+Springer, 2007, Section~3.6. 
+ISBN: 9783540345138
+
+\bibitem{johnstone1982}
+Peter T. Johnstone.
+\textit{Stone Spaces}.
+Cambridge University Press, 1986.
+ISBN: 9780521337793
+
+\bibitem{royden2010}
+H. L. Royden, P. M. Fitzpatrick.
+\textit{Real Analysis} (4th Edition).
+Pearson, 2010.
+ISBN: 9780131437470
+
+\bibitem{lyapin1960}
+E. S. Lyapin.
+\textit{Semigroups}.
+Fizmatgiz, 1960. [In Russian]
+
+\bibitem{eisenbud1995}
+David Eisenbud.
+\textit{Commutative Algebra}.
+Springer Science \& Business Media, 1995.
+ISBN: 9780387942698
+
+\end{thebibliography}
+
+\end{document}
