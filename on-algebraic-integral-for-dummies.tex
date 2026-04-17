@@ -1,0 +1,261 @@
+\documentclass[12pt]{article}
+\sloppy
+\hfuzz=10pt
+\tolerance=1000
+\usepackage{amsmath, amssymb}
+\usepackage{tikz-cd}
+\usepackage{relsize}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{example}{Example}
+\newtheorem*{lemmastar}{Lemma}
+
+\title{On Algebraic Integral For Dummies}
+\author{Nikita Umerov}
+\date{April 17, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We explain the essence of the integral axiom and provide examples of integrating elementary 
+functions using the new integration method.
+\end{abstract}
+
+\section*{Introduction}
+
+My paper "On Algebraic Integral" \cite{umerov2025} has not received the circulation it deserves. 
+Moreover, it appears that guys from the so-called "academic community" — an international 
+governmental organization designed to slow down scientific progress to protect 
+the governments from dissent — these guys have failed to understand my discovery. 
+At the very least, I have received no significant response from them.
+
+\vspace{5pt}
+
+That is why I decided to write a simplified version of the paper — a version for dummies — 
+to show the essence of the discovery in the most basic terms. 
+I also want to highlight some of its possible applications. 
+Of course, the applications of that discovery are not limited to the facts presented in the paper. 
+Many of them I cannot even imagine — just as Arthur Cayley could not have imagined the use of matrices 
+in artificial intelligence. I will only point out the most obvious ones.
+
+\vspace{5pt}
+
+Moreover, as a researcher, I see my primary mission as exposing the bankruptcy of the academic 
+community (together with the contemporary educational system) and its immeasurable harm to society. 
+I am currently working on a book on this very subject and do not plan to be 
+greatly distracted from that work. I am writing this article only as an explanation 
+to accompany the main paper "On Algebraic Integral" \cite{umerov2025} — in response to requests I 
+have received from several people. 
+
+\vspace{5pt}
+\newpage
+
+\section*{What is the integral axiom?}
+
+In the first part of the paper, we will show that the integral is not a function of a single variable, 
+but an operation $f \triangleright g = \int f \, dg$. While the method of change of variables is 
+nothing other than the distributivity of composition over that operation:
+
+\[
+(f \triangleright g) \circ h = (f \circ h) \triangleright (g \circ h)
+\]
+
+\noindent \textbf{Let's begin.}
+
+\vspace{20pt}
+\noindent Let $\langle R, \cdot, \circ \rangle$ be a near-ring. That is, a ring with only right distributivity. 
+That is, $R$ such a structure that 
+
+\[
+\forall f, g, h \in R: (f \cdot g) \circ h = (f \circ h) \cdot (g \circ h)
+\]
+
+\vspace{5pt}
+
+\noindent Let $d \colon R \to R$ be a function satisfying the chain rule, that is
+
+\[
+\forall f, g \in R: d(f \circ g) = \big(d(f) \circ g \big) \cdot d(g)
+\]
+
+\vspace{5pt}
+
+\noindent Let $\int \colon R \to R$ be a function opposite to $d$. Then
+
+\vspace{15pt}
+\noindent\textbf{Theorem.} $\forall f, g, h \in R:$
+
+\[
+\big(\int f \cdot d(g)\big) \circ h = \int (f \circ h) \cdot d(g \circ h)
+\]
+
+\vspace{5pt}
+
+\begin{lemmastar} $\forall f, g \in R:$ 
+
+\[
+\quad \int(f) \circ \int(g) = \int \big(f \circ \int(g) \cdot g \big).
+\]
+
+\vspace{10pt}
+\textbf{Proof.}  For any $x, y \in R$, chain rule gives:
+
+\[
+d(x \circ y) = d(x) \circ y \cdot d(y).
+\]  
+
+\vspace{5pt}
+Substitute $x = \int f$, $y = \int g$:  
+
+\[
+d\big(\int f \circ \int g\big) = \big(f \circ \int g \big) \cdot g.
+\]  
+
+\newpage
+Applying $\int$ to both sides yields  
+
+\[
+\int f \circ \int g = \int \big(f \circ \int g \cdot g \big). \quad \square
+\] 
+
+\end{lemmastar}
+
+\vspace{15pt}
+\noindent\textbf{Proof of Theorem:}
+
+\[
+\big(\int f \cdot d(g)\big) \circ h = \big(\int f \cdot d(g)\big) \circ \int d(h)
+\]
+
+\vspace{5pt}
+Applying Lemma:
+
+\[
+= \int\big(\big[f \cdot d(g)\big] \circ \big(\int d(h)\big) \cdot d(h)\big) 
+\]  
+
+\[
+= \int\big(\big[f \cdot d(g)\big] \circ h \cdot d(h)\big)
+\]  
+
+\vspace{5pt}
+By right distributivity in $R$:  
+
+\[
+= \int \big(\big[f \circ h \big] \cdot \big[d(g) \circ h \big] \cdot d(h)\big)
+\]  
+
+\vspace{5pt}
+And reduce the expression by the chain rule for d:
+
+\[
+= \int \big(\big[f \circ h \big] \cdot d(g \circ h))
+\]  
+
+\vspace{5pt}
+Or in other words:
+
+\[
+(f \triangleright g) \circ h = (f \circ h) \triangleright (g \circ h) 
+\]
+
+\vspace{5pt}
+\centerline{ --- We call it "integral axiom". $\blacksquare$}
+
+\vspace{10pt}
+\noindent There is also a converse statement: informally speaking, for any distributive operation, 
+there exists a corresponding function that satisfies the chain rule. 
+For details see Theorem 2 in "On Algebraic Integral" \cite{umerov2025}.
+
+\newpage
+\section*{Examples}
+
+We will now integrate several elementary functions using the integral axiom, 
+to demonstrate how the theorem simplifies integration by turning it into a purely algebraic process.
+
+\begin{example}
+\[
+\frac{1}{x \ln(x)} \triangleright x = \frac{1}{\ln(x)} \triangleright \ln(x)
+\]
+
+- put $\frac{1}{x}$ under the differential
+
+\[
+= [\frac{1}{x} \circ \ln(x)] \triangleright \ln(x) = (\frac{1}{x}  \triangleright x) \circ \ln(x)
+\]
+
+- apply the integral axiom.
+
+\[
+= \ln(\ln(x))
+\]
+
+- for details about integrating of $\frac{1}{x}$ see Lemma 4.8 in "On Algebraic Integral" \cite{umerov2025}
+
+
+\end{example}
+
+\begin{example}
+
+\[
+x^2 (x^3 + 1)^\frac{1}{3} \triangleright x = (x^3 + 1)^\frac{1}{3} \triangleright \frac{1}{3} x^3
+\]
+
+- put $x^2$ under the differential
+
+\[
+= \frac{1}{3}[x^\frac{1}{3} \circ (x^3 + 1) \triangleright (x^3 + 1)] = \frac{1}{3}[(x^\frac{1}{3} \triangleright x) \circ (x^3 + 1)]
+\]
+
+- use homogeneity of $d$ and the axiom of integral.  Note that composition has priority over the integral.
+
+\[
+= \frac{1}{3}[(\frac{3}{4} x^\frac{4}{3}) \circ (x^3 + 1)] = \frac{1}{4} (x^3 + 1)^\frac{4}{3}
+\]
+
+\end{example}
+
+\begin{example}
+
+\[
+\frac{\sin(x)}{1 + \cos^2(x)} \triangleright x = \frac{1}{1 + \cos^2(x)} \triangleright (-\cos(x))
+\]
+
+\[
+= -(\frac{1}{1 + x^2} \circ \cos(x) \triangleright \cos(x)) = -(\frac{1}{1 + x^2} \triangleright x) \circ \cos(x)
+\]
+
+- the integral axiom
+
+\[
+= -\arctan(\cos(x))
+\]
+
+\end{example} 
+
+
+Simplicity of finding integrals demonstrated in Examples 1–3 suggests that the 
+proposed algebraic method of integration can be turned into a fast and efficient symbolic 
+integration algorithm for computer algebra systems and symbolic libraries such as MATLAB and SymPy. 
+It remains an open question whether the method can accelerate numerical integration — which, in theory, 
+could lead to the optimization and acceleration of neural networks and other mathematical systems.
+
+
+\begin{thebibliography}{99}
+
+\bibitem{umerov2025}
+N. Umerov
+\textit{On Algebraic Integral}.
+Zenodo, 2025.
+DOI: 10.5281/zenodo.17376700
+
+\end{thebibliography}
+
+\end{document}
