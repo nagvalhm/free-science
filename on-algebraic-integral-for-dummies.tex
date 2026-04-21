@@ -14,6 +14,7 @@
 \newtheorem{theorem}[definition]{Theorem}
 \newtheorem{example}{Example}
 \newtheorem*{lemmastar}{Lemma}
+\newtheorem*{definitionstar}{Definition}
 
 \title{On Algebraic Integral For Dummies}
 \author{Nikita Umerov}
@@ -30,31 +31,49 @@ functions using the new integration method.
 
 \section*{Introduction}
 
-My paper "On Algebraic Integral" \cite{umerov2025} has not received the circulation it deserves. 
-Moreover, it appears that guys from the so-called "academic community" — an international 
-governmental organization designed to slow down scientific progress to protect 
-the governments from dissent — these guys have failed to understand my discovery. 
-At the very least, I have received no significant response from them.
+With his famous painting Black Square, Kazimir Malevich urged artists to embrace simplicity 
+and to avoid multiplying entities beyond necessity — as is well known, Malevich’s black square 
+symbolizes economy. Like Malevich, with this paper I want to urge mathematicians toward economy of 
+meaning and the pursuit of simplicity — extra complexity distances them from “ordinary people”, 
+while the universe is beautiful in its simplicity, and practice shows that any mathematical concept can 
+be explained to a child if one understands it well enough.
 
 \vspace{5pt}
 
-That is why I decided to write a simplified version of the paper — a version for dummies — 
-to show the essence of the discovery in the most basic terms. 
-I also want to highlight some of its possible applications. 
-Of course, the applications of that discovery are not limited to the facts presented in the paper. 
-Many of them I cannot even imagine — just as Arthur Cayley could not have imagined the use of matrices 
-in artificial intelligence. I will only point out the most obvious ones.
+The integration method I propose in this paper is simple and economical. 
+I am writing it in response to requests from several people who told me that 
+the first paper \cite{umerov2025} was too complicated and that the practical application of the 
+theory of the algebraic integral was not obvious. And although doing mathematics 
+in today’s realities seems to me extremely immoral, I nevertheless decided to answer 
+these requests with this paper, in order to bring the matter to some logical conclusion. 
+In this paper, I will explain in simple words the essence of the theory of the algebraic 
+integral and show how to integrate functions using a new method that is much simpler than the classical one. 
+The substitution method currently used to solve integrals is complicated — 
+its application is an art, mastering which causes considerable difficulties for students. 
+Moreover, using this method assumes that we can replace a function with an independent variable — 
+students usually have a rather vague idea of the nature of this operation, but in reality, 
+justifying the method requires invoking concepts from topology and differential geometry — such as limit, 
+continuity, and smoothness. The new integration method proposed in this paper uses pure algebra, 
+without appealing even to the concept of a limit — either explicitly or implicitly. 
+Furthermore, in the conclusion, I will suggest some other, most obvious applications of the algebraic integral.
 
 \vspace{5pt}
 
-Moreover, as a researcher, I see my primary mission as exposing the bankruptcy of the academic 
-community (together with the contemporary educational system) and its immeasurable harm to society. 
-I am currently working on a book on this very subject and do not plan to be 
-greatly distracted from that work. I am writing this article only as an explanation 
-to accompany the main paper "On Algebraic Integral" \cite{umerov2025} — in response to requests I 
-have received from several people. 
+Beyond being a symbol of economy, Malevich’s Black Square can also be seen as a symbol of a 
+completed theorem or even a theory — depending on the size of the square — as well as a 
+symbol of a tombstone, which in turn symbolizes the completion of a person’s life or, 
+for example, of some destructive international organization. 
+I wish to express my support and solidarity with Grigory Perelman — a man who has likely done 
+more for science than anyone else in its entire history, 
+having sacrificed his own well-being for it. I believe this sacrifice was not in vain, 
+and I will do everything in my power to keep it that way.
 
-\vspace{5pt}
+\vspace{25pt}
+\begin{center}
+\rule{7cm}{7cm}
+\end{center}
+
+
 \newpage
 
 \section*{What is the integral axiom?}
@@ -87,7 +106,8 @@ That is, $R$ such a structure that
 
 \vspace{5pt}
 
-\noindent Let $\int \colon R \to R$ be a function opposite to $d$. Then
+\noindent Let $\int \colon R \to R$ be a function opposite to $d$. 
+Let's call this function the \textbf{antiderivative}. Then
 
 \vspace{15pt}
 \noindent\textbf{Theorem.} $\forall f, g, h \in R:$
@@ -175,73 +195,169 @@ there exists a corresponding function that satisfies the chain rule.
 For details see Theorem 2 in "On Algebraic Integral" \cite{umerov2025}.
 
 \newpage
+\section*{Axioms}
+
+\noindent Before moving on to practical examples of solving integrals using the algebraic method, 
+I will recall the axioms of a \textbf{square rring with exponent}, which you can find in 
+Definitions 4.11, 4.10 and 4.4 in \cite{umerov2025}. 
+
+
+\begin{definitionstar}
+In particular, the ring of diffeomorphisms $\langle C^1, \cdot, \circ \rangle$ together with the antiderivative 
+as an algebraic integral forms a \textbf{square rring with a bilinear integral} 
+$\langle R, +, \cdot, \circ, \triangleright, 0, 1, \mathrm{x}, \mathrm{e} \rangle$, 
+that is $\langle R, \cdot, \circ \rangle$ is a near-ring such that $R$ is vector 
+space over the field $C$ and $\forall f, g, h \in R$, $\forall \alpha, \beta \in C$:
+
+\begin{enumerate}
+\item $1 \triangleright h = h$ \hfill (identity axiom)  
+\item $(f \cdot g) \triangleright h = f \triangleright (g \triangleright h)$ \hfill (associativity)  
+\item $(f \triangleright h) \circ g = (f \circ g) \triangleright (h \circ g)$ \hfill (integral axiom)  
+\item $(\alpha f + \beta g) \triangleright h = \alpha (f \triangleright h) + \beta (g \triangleright h)$ \hfill (linearity in the first argument)
+\item $f \triangleright (\alpha g + \beta h) = \alpha (f \triangleright g) + \beta (f \triangleright h)$ \hfill (linearity in the second argument)
+\end{enumerate}
+
+and the integral $\triangleright$ has an exponential element 
+$\mathrm{e} \in R$ such that $\mathrm{e} \triangleright \mathrm{x} = \mathrm{e}$
+\end{definitionstar}
+
+\vspace{10pt}
+\noindent\textbf{Remark.} It is easy to see that $d(\mathrm{x}) = 1$:
+\[
+d(\mathrm{x}) = d(\mathrm{x} \circ \mathrm{x}) = d(\mathrm{x}) \circ \mathrm{x} \cdot d(\mathrm{x}) = d(\mathrm{x}) \cdot d(\mathrm{x})
+\]
+
+- therefore we simply write $\int f$ instead of the usual notation $\int f \, dx$. 
+Note that composition has priority over the multiplication.
+
+\vspace{10pt}
+\noindent\textbf{Remark.} It is easy to see that the identity axiom and associativity also 
+hold for the antiderivative. Denoting $d(h) = t$, we get:
+
+\begin{enumerate}
+\item $\int 1 \, dh = \int 1 \cdot t = h$  
+\item $\int f \, d(\int g \, dh) = \int f \, d(\int g \cdot t) = \int fgt = \int (fg) \, dh$
+\end{enumerate}
+
+\newpage
 \section*{Examples}
 
 We will now integrate several elementary functions using the integral axiom, 
 to demonstrate how the theorem simplifies integration by turning it into a purely algebraic process.
 
-\begin{example}
+\begin{example} $\mathrm{x} \triangleright \ln =\mathrm{x} $. 
+    
+    Denoting by $\ln$ the compositional inverse of the exponential element, 
+    
+    $\mathrm{e} \circ \ln = \ln \circ \mathrm{e} = \mathrm{x}$, let's solve:
+
 \[
-\frac{1}{x \ln(x)} \triangleright x = \frac{1}{\ln(x)} \triangleright \ln(x)
+\mathrm{x} \triangleright \ln = (\mathrm{e} \circ \ln) \triangleright (\mathrm{x} \circ \ln) = (\mathrm{e} \triangleright \mathrm{x}) \circ \ln
+\]
+- by integral axiom
+\[
+= \mathrm{e} \circ \ln = \mathrm{x} \quad \square
 \]
 
-- put $\frac{1}{x}$ under the differential
+\end{example}
+
+\begin{example} $\frac{1}{x}  \triangleright x= \ln$:
+\[
+\frac{1}{x}  \triangleright x = \frac{1}{\mathrm{x}}  \triangleright (\mathrm{x} \triangleright \ln)
+\]
+
+- by Example 1
 
 \[
-= [\frac{1}{x} \circ \ln(x)] \triangleright \ln(x) = (\frac{1}{x}  \triangleright x) \circ \ln(x)
+= (\frac{1}{\mathrm{x}}  \cdot \mathrm{x}) \triangleright \ln = 1 \triangleright \ln = \ln
+\]
+
+-by associativity and identity axioms    $\square$
+\end{example}
+
+
+\begin{example}
+\[
+\frac{1}{\mathrm{x} \cdot \ln} \triangleright \mathrm{x} = \frac{1}{\ln} \triangleright (\frac{1}{\mathrm{x}} \triangleright \mathrm{x}) = \frac{1}{\ln} \triangleright \ln
+\]
+
+- by associativity axiom and Example 2
+
+\[
+= (\frac{1}{\mathrm{x}} \circ \ln) \triangleright (\mathrm{x} \circ \ln) = (\frac{1}{\mathrm{x}}  \triangleright \mathrm{x}) \circ \ln
 \]
 
 - apply the integral axiom.
 
 \[
-= \ln(\ln(x))
+= \ln(\ln(\mathrm{x})) \quad \square
 \]
 
-- for details about integrating of $\frac{1}{x}$ see Lemma 4.8 in "On Algebraic Integral" \cite{umerov2025}
 
+\end{example}
+
+\newpage
+\begin{example}
+
+\[
+\mathrm{x}^2 (\mathrm{x}^3 + 1)^\frac{1}{3} \triangleright \mathrm{x} = (\mathrm{x}^3 + 1)^\frac{1}{3} \triangleright (\mathrm{x}^2 \triangleright \mathrm{x}) = (\mathrm{x}^3 + 1)^\frac{1}{3} \triangleright \frac{1}{3} \mathrm{x}^3
+\]
+
+- using associativity and integrating $\mathrm{x}^2$
+
+\[
+= \frac{1}{3}[\mathrm{x}^\frac{1}{3} \circ (\mathrm{x}^3 + 1) \triangleright (\mathrm{x}^3 + 1)] = \frac{1}{3}[(\mathrm{x}^\frac{1}{3} \triangleright \mathrm{x}) \circ (\mathrm{x}^3 + 1)]
+\]
+
+- use linearity in the second argument and the axiom of integral.  Note that composition has priority over the integral.
+
+\[
+= \frac{1}{3}[(\frac{3}{4} \mathrm{x}^\frac{4}{3}) \circ (\mathrm{x}^3 + 1)] = \frac{1}{4} (\mathrm{x}^3 + 1)^\frac{4}{3}  \quad \square
+\]
 
 \end{example}
 
 \begin{example}
 
 \[
-x^2 (x^3 + 1)^\frac{1}{3} \triangleright x = (x^3 + 1)^\frac{1}{3} \triangleright \frac{1}{3} x^3
-\]
-
-- put $x^2$ under the differential
-
-\[
-= \frac{1}{3}[x^\frac{1}{3} \circ (x^3 + 1) \triangleright (x^3 + 1)] = \frac{1}{3}[(x^\frac{1}{3} \triangleright x) \circ (x^3 + 1)]
-\]
-
-- use homogeneity of $d$ and the axiom of integral.  Note that composition has priority over the integral.
-
-\[
-= \frac{1}{3}[(\frac{3}{4} x^\frac{4}{3}) \circ (x^3 + 1)] = \frac{1}{4} (x^3 + 1)^\frac{4}{3}
-\]
-
-\end{example}
-
-\begin{example}
-
-\[
-\frac{\sin(x)}{1 + \cos^2(x)} \triangleright x = \frac{1}{1 + \cos^2(x)} \triangleright (-\cos(x))
+\frac{\sin}{1 + \cos^2} \triangleright x = \frac{1}{1 + \cos^2} \triangleright (-\cos)
 \]
 
 \[
-= -(\frac{1}{1 + x^2} \circ \cos(x) \triangleright \cos(x)) = -(\frac{1}{1 + x^2} \triangleright x) \circ \cos(x)
+= -(\frac{1}{1 + x^2} \circ \cos \triangleright \cos) = -(\frac{1}{1 + \mathrm{x}^2} \triangleright \mathrm{x}) \circ \cos
 \]
 
 - the integral axiom
 
 \[
-= -\arctan(\cos(x))
+= -\arctan(\cos(\mathrm{x}))  \quad \square
 \]
 
 \end{example} 
 
+\vspace{10pt}
+\noindent\textbf{Remark.} 
 
-Simplicity of finding integrals demonstrated in Examples 1–3 suggests that the 
+\noindent In the case when the exponential element is additive, i.e. 
+\[
+\mathrm{e}(f+g) = \mathrm{e}(f) \cdot \mathrm{e}(g)
+\]
+this is equivalent to the Leibniz rule by Theorem 6 in \cite{umerov2025}. Given that, as we established above,
+ $d(\mathrm{x}) = 1$, 
+the Leibniz rule uniquely determines $d$ on elements $x^n$ by induction for natural $n$, 
+with base $n=2$, and then extends uniquely to rational and real powers. Sine and cosine, in turn, 
+may be defined as elements satisfying the rules: 
+$d(\sin) = \cos$, $d(\cos) = -\sin$, $\sin(0)=0$, $\cos(0)=1$ 
+--- it is well known that these conditions uniquely determine sine and cosine over the real numbers; 
+the remaining trigonometric functions are defined in terms of these.
+
+Alternatively, in Examples 4 and 5 one may simply regard $R$ as the ring of diffeomorphisms 
+with the standard antiderivative.
+
+\newpage
+\section*{Conclusion}
+
+Simplicity of finding integrals demonstrated in Examples 1–5 suggests that the 
 proposed algebraic method of integration can be turned into a fast and efficient symbolic 
 integration algorithm for computer algebra systems and symbolic libraries such as MATLAB and SymPy. 
 It remains an open question whether the method can accelerate numerical integration — which, in theory, 
@@ -257,5 +373,10 @@ Zenodo, 2025.
 DOI: 10.5281/zenodo.17376700
 
 \end{thebibliography}
+
+\vspace{25pt}
+\begin{center}
+\rule{7cm}{7cm}
+\end{center}
 
 \end{document}
