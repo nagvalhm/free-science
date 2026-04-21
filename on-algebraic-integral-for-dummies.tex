@@ -113,7 +113,7 @@ Let's call this function the \textbf{antiderivative}. Then
 \noindent\textbf{Theorem.} $\forall f, g, h \in R:$
 
 \[
-\big(\int f \cdot d(g)\big) \circ h = \int (f \circ h) \cdot d(g \circ h)
+\big(\int f \cdot d(g)\big) \circ h = \int (f \circ h) \, d(g \circ h)
 \]
 
 \vspace{5pt}
@@ -121,7 +121,7 @@ Let's call this function the \textbf{antiderivative}. Then
 \begin{lemmastar} $\forall f, g \in R:$ 
 
 \[
-\quad \int(f) \circ \int(g) = \int \big(f \circ \int(g) \cdot g \big).
+\quad \int(f) \circ \int(g) = \int \big(f \circ (\int g) \cdot g \big).
 \]
 
 \vspace{10pt}
@@ -142,7 +142,7 @@ d\big(\int f \circ \int g\big) = \big(f \circ \int g \big) \cdot g.
 Applying $\int$ to both sides yields  
 
 \[
-\int f \circ \int g = \int \big(f \circ \int g \cdot g \big). \quad \square
+\int f \circ \int g = \int \big(f \circ (\int g) \cdot g \big). \quad \square
 \] 
 
 \end{lemmastar}
@@ -151,7 +151,7 @@ Applying $\int$ to both sides yields
 \noindent\textbf{Proof of Theorem:}
 
 \[
-\big(\int f \cdot d(g)\big) \circ h = \big(\int f \cdot d(g)\big) \circ \int d(h)
+\big(\int f \, d(g)\big) \circ h = \big(\int [f \cdot d(g)]\big) \circ \int d(h)
 \]
 
 \vspace{5pt}
