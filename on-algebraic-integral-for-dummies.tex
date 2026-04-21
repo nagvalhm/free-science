@@ -219,7 +219,7 @@ space over the field $C$ and $\forall f, g, h \in R$, $\forall \alpha, \beta \in
 
 and the integral $\triangleright$ has an exponential element 
 $\mathrm{e} \in R$ such that $\mathrm{e} \triangleright \mathrm{x} = \mathrm{e}$. 
-In addition we assume that the exponential element is additive: 
+In addition we may assume that the exponential element is additive: 
 \[
 \mathrm{e} \circ (f+g)=(\mathrm{e} \circ f)\cdot(\mathrm{e} \circ g)
 \]
@@ -348,11 +348,14 @@ to demonstrate how the theorem simplifies integration by turning it into a purel
 \[
 \mathrm{e}(f+g) = \mathrm{e}(f) \cdot \mathrm{e}(g)
 \]
-this is equivalent to the Leibniz rule by Theorem 6 in \cite{umerov2025}. Given that, as we established above,
- $d(\mathrm{x}) = 1$, 
-the Leibniz rule uniquely determines $d$ on elements $x^n$ by induction for natural $n$, 
-with base $n=2$, and then extends uniquely to rational and real powers. Sine and cosine, in turn, 
-may be defined as elements satisfying the rules: 
+
+this is equivalent to the multiplicativity of the logarithm. Given that, and as we established above,
+ $d(\mathrm{x}) = 1$, $d$ is uniquely determined on $\alpha \mathrm{x}^\beta$:
+ \[
+ d(\alpha \mathrm{x}^\beta) = \alpha d(\mathrm{e} \circ (\beta \ln)) = \alpha [d(\mathrm{e}) \circ (\beta \ln) \cdot d(\beta \ln)] = \frac{\alpha \beta \mathrm{x}^\beta}{\mathrm{x}} 
+ \]
+
+ Sine and cosine, in turn, may be defined as elements satisfying the rules: 
 $d(\sin) = \cos$, $d(\cos) = -\sin$, $\sin(0)=0$, $\cos(0)=1$ 
 --- it is well known that these conditions uniquely determine sine and cosine over the real numbers; 
 the remaining trigonometric functions are defined in terms of these.
