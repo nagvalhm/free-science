@@ -207,7 +207,7 @@ In particular, the ring of diffeomorphisms $\langle C^1, \cdot, \circ \rangle$ t
 as an algebraic integral forms a \textbf{square rring with a bilinear integral} 
 $\langle R, +, \cdot, \circ, \triangleright, 0, 1, \mathrm{x}, \mathrm{e} \rangle$, 
 that is $\langle R, \cdot, \circ \rangle$ is a near-ring such that $R$ is vector 
-space over the field $C$ and $\forall f, g, h \in R$, $\forall \alpha, \beta \in C$:
+space over the field $F$ and $\forall f, g, h \in R$, $\forall \alpha, \beta \in F$:
 
 \begin{enumerate}
 \item $1 \triangleright h = h$ \hfill (identity axiom)  
@@ -350,10 +350,13 @@ to demonstrate how the theorem simplifies integration by turning it into a purel
 \]
 
 this is equivalent to the multiplicativity of the logarithm. Given that, and as we established above,
- $d(\mathrm{x}) = 1$, $d$ is uniquely determined on $\alpha \mathrm{x}^\beta$:
+ $d(\mathrm{x}) = 1$, $d$ is uniquely determined on $\alpha \mathrm{x}^n$ for $n \in \mathbb{N}$ and $\alpha \in F$:
  \[
- d(\alpha \mathrm{x}^\beta) = \alpha d(\mathrm{e} \circ (\beta \ln)) = \alpha [d(\mathrm{e}) \circ (\beta \ln) \cdot d(\beta \ln)] = \frac{\alpha \beta \mathrm{x}^\beta}{\mathrm{x}} 
+ d(\alpha \mathrm{x}^n) = \alpha d(\mathrm{e} \circ (n \ln)) = \alpha [d(\mathrm{e}) \circ (n \ln) \cdot d(n \ln)] = \frac{\alpha n \mathrm{x}^n}{\mathrm{x}} 
  \]
+- you can use the Leibniz rule by Theorem 6 from [1] to obtain the same result by induction.
+Hence, by the converse part of Theorem 2 in \cite{umerov2025}, 
+we obtain the integrals of the form $\alpha \mathrm{x}^n \triangleright \mathrm{x}$.
 
  Sine and cosine, in turn, may be defined as elements satisfying the rules: 
 $d(\sin) = \cos$, $d(\cos) = -\sin$, $\sin(0)=0$, $\cos(0)=1$ 
@@ -363,7 +366,7 @@ the remaining trigonometric functions are defined in terms of these.
 Alternatively, in Examples 4 and 5 one may simply regard $R$ as the ring of diffeomorphisms 
 with the standard antiderivative.
 
-\newpage
+
 \section*{Conclusion}
 
 Simplicity of finding integrals demonstrated in Examples 1–5 suggests that the 
@@ -383,7 +386,7 @@ DOI: 10.5281/zenodo.17376700
 
 \end{thebibliography}
 
-\vspace{25pt}
+\vspace{10pt}
 \begin{center}
 \rule{7cm}{7cm}
 \end{center}
