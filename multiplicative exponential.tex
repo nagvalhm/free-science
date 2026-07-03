@@ -1,0 +1,1135 @@
+\documentclass[12pt]{article}
+\sloppy
+\hfuzz=10pt
+\tolerance=1000
+\usepackage{amsmath, amssymb}
+\usepackage{tikz-cd}
+\usepackage{relsize}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+\theoremstyle{definition}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{example}{Example}
+\newtheorem*{lemmastar}{Lemma}
+\newtheorem*{definitionstar}{Definition}
+
+\title{We don't need addition for the Leibniz rule}
+\author{Nikita Umerov}
+\date{July 3, 2026}
+
+\begin{document}
+
+\maketitle
+
+{\centering
+\noindent\textit{Preliminary version*}
+\par}
+
+\begin{abstract}
+We show that for a linear differentiation, the Leibniz rule is equivalent to the condition that 
+all its exponentials lie on a single ray in a vector space. We generalize 
+the notions of a multiplicative exponential and a derivative to right rings 
+and establish conditions under which the kernel of a differentiation embeds into the constants. 
+We prove an analogue of the homomorphism theorem for differentiations and give an explicit form of certain 
+differentiations of a triangular rring that lie beyond the scope of the known classification.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Introduction}
+
+Gottfried Wilhelm Leibniz discovered his famous rule thanks to a mistake. Initially, he assumed the multiplicativity 
+of the derivative. However, he quickly refuted this assumption geometrically and, after some time of reflection, 
+arrived at the formula:
+\[
+d(uv) = u\,d(v) + v\,d(u) + d(u)\,d(v)
+\]
+
+Leibniz simply discarded the term \(d(u)d(v)\), considering it ``negligible,'' although the knowledge of his time 
+did not allow him to justify this step rigorously. A great mathematical discovery came into being thanks 
+to an unforgivable carelessness --- and this is how calculus was being born.
+The present paper also came into being thanks to a mistake --- we discovered an error in the paper 
+``On Algebraic Integral'' \cite{umerov2025}, and all subsequent reasoning was initially motivated by the desire to correct it.
+
+\vspace{5pt}
+
+In turn, the paper ``On Algebraic Integral'' was written as the result of many years of reflection on what 
+everyday intuition lies behind the chain rule --- mathematicians call such intuition algebra, 
+and ultimately we managed to find it. In that paper, we showed that the chain rule is closely 
+connected with the notion of distributivity, which allowed us to give a purely algebraic definition 
+of the integral without using such concepts as smoothness, continuity, or limits in any form. 
+In it, as well as in the paper ``On Algebraic Integral for Dummies'' \cite{umerov2026}, we showed that 
+the multiplicativity of the exponential is equivalent to the Leibniz rule.
+
+\vspace{5pt}
+
+In this paper, we continue to develop algebraic calculus and do for the Leibniz rule what 
+we did for the chain rule in \cite{umerov2025} --- we investigate what everyday intuition lies 
+behind the Leibniz rule. In Theorem~2, we show that a linear differentiation satisfies the Leibniz 
+rule if and only if all its exponentials lie on a single ray in a vector space --- this intuition 
+is simultaneously algebraic and geometric, as is so characteristic of linear algebra.
+
+\vspace{5pt}
+
+In the process of writing this paper, we also repeatedly made mistakes and rewrote it --- at the beginning of 
+its writing, we assumed that any linear differentiation has a multiplicative exponential. However, linearity 
+alone was not enough, and in the end it turned out that linearity has no essential bearing on the matter, 
+and we were able to generalize the multiplicativity of the exponential and the notion of a derivative 
+to right rings --- a structure in which there is no operation of addition at all --- and Lemma~3.2 ``On the embedding'' 
+is the main result of this paper. Theorem~2, in turn, proved for linear differentiations, 
+gives an equivalent formulation of the Leibniz rule that does not use the operation of addition as well.
+
+\vspace{5pt}
+
+In turn, in Lemma~2.6 ``On the kernel of a differentiation,'' we demonstrate how algebraic calculus 
+borrows methods from group theory, thereby allowing the proof of nontrivial results later on. 
+In Section~5, we discuss an existing attempt to classify differentiations over $\mathrm{C}^1$ and find an 
+explicit form for certain differentiations in a triangular rring --- including ones that lie beyond the 
+scope of the known classification. In the conclusion, we demonstrate the beauty and nontriviality of 
+certain differentiations, and these are undoubtedly only the first steps in the study of the astonishing and 
+beautiful world of algebraic calculus.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{lampRR.jpg}
+\label{fig:lampRR}
+\end{figure}
+
+\newpage
+
+\section{Preliminaries}
+
+\begin{definition} $\langle R, \cdot, \circ \rangle$ is called a \textbf{right ring} (or \textbf{rring}) if it is 
+a near-ring with unity $\mathrm{id}$ where $\langle R, \cdot \rangle$ is a commutative group.  
+That is, a ring with unity that does not necessarily satisfy left distributivity. 
+For notational convenience, we will assume that composition $\circ$ takes precedence over multiplication $\cdot$.
+
+\end{definition}
+
+\vspace{5pt}
+\begin{definition} Let $\langle R, \cdot, \circ \rangle$ be a right ring. An element $c \in R$ is called a \textbf{constant} if 
+    for all $f \in R$, $c \cdot f = c$.
+\end{definition}
+
+\vspace{5pt}
+\begin{definition} $\langle R, \cdot, \circ \rangle$ is called a \textbf{division right ring} (or \textbf{division rring}) 
+    if it is a right ring and every nonconstant element $f \in R$ has a multiplicative inverse $f^{-1}$ 
+    such that: $f^{-1} \cdot f = f \cdot f^{-1} = \mathrm{id}$  
+\end{definition}
+
+\vspace{5pt}
+\begin{definition} $\langle R, +, \cdot, \circ \rangle$ is called a \textbf{triangular right ring} (or \textbf{triangular rring}) if:
+\begin{enumerate}
+\item $\langle R, +, \cdot \rangle$ is a field with sum $+$, multiplication $\cdot$, additive inverse $f \to -f$, multiplication inverse $f \to 1/f$, zero $0$ and unit $1$,
+\item $\langle R \setminus \{0\}, \cdot, \circ \rangle$ is a division right ring with multiplication $\cdot$, composition $\circ$, 
+additive inverse $f \to 1/f$, multiplication inverse $f \to f^{-1}$, zero $1 \neq 0$ and nonconstant unit $\mathrm{id} \neq 1$.  
+\item Composition is right distributive over addition, that is:  
+
+\[
+\forall a, b, c \in R: (a + b) \circ c = a \circ c + b \circ c  
+\]
+
+\end{enumerate}
+\end{definition}
+
+\vspace{5pt}
+\begin{definition}  We call a map $d: R \to R$ a \textbf{differentiation} 
+    of a right ring $R$ if: 
+    \[
+    \forall f, g \in R: d(f \circ g) = d(f)\circ g \cdot d(g)
+    \]
+\end{definition}
+
+
+
+
+\section{Constants and the kernel of a differentiation}
+
+In Lemma 3.10 of \cite{umerov2025}, it was shown that the constants form a two-sided ideal in $\langle R, \cdot, \circ \rangle$. 
+Let us show that they also form a subfield in $\langle R, +, \cdot \rangle$.
+
+\vspace{10pt}
+\begin{lemma} Let $\langle R, +, \cdot, \circ \rangle$ be a triangular rring. 
+    The constants form a subfield in $\langle R, +, \cdot \rangle$.
+
+\vspace{10pt}
+\textbf{Proof.} Let $C$ be the set of constants of $R$. Let $c, t \in C$, $f \in R$.
+
+\vspace{5pt}
+Zero is a constant:
+\[
+0 \circ f = (0 + 0) \circ f = 0 \circ f + 0 \circ f
+\]
+
+\[
+0 = 0 \circ f
+\]
+
+\vspace{5pt}
+Additive inverses are constants:
+
+\[
+0 = (c - c) \circ f = c \circ f + (-c) \circ f
+\]
+
+\[
+(-c) \circ f = -(c \circ f) = -c
+\]
+
+\vspace{5pt}
+Constants closed under multiplication:
+
+\[
+(c + t) \circ f = c \circ f + t \circ f = c + t
+\]
+
+Thus, the constants form an additive subgroup in $\langle R, + \rangle$. The fact that the constants form a 
+multiplicative subgroup is proved similarly, using the right distributivity of composition over multiplication. $\square$
+\end{lemma}
+
+\vspace{10pt}
+It is a well-known fact from algebra that a field forms a linear space over any of its subfields. 
+Thus, a triangular rring forms a linear space over the ideal of its constants.
+
+\vspace{5pt}
+\begin{definition}
+Let \(\langle R, +, \cdot, \circ \rangle\) be a triangular rring. Let C be the ideal of its constants. 
+We call a differentiation \(d: R \to R\) \textbf{linear} 
+if it is linear with respect to addition, that is,
+\[
+\forall f, g \in R, \forall \alpha, \beta \in C: \quad d(\alpha f + \beta g) = \alpha \, d(f) + \beta \, d(g).
+\]
+\end{definition}
+
+\begin{definition}
+Let $\langle R, \cdot, \circ \rangle$ be a rring and let \(d: R \to R\) be a differentiation. We call the set
+\[
+\ker(d) = \{ f \in R \mid d(f) = 1 \}
+\]
+the \textbf{kernel} of the differentiation \(d\).
+\end{definition}
+
+\vspace{10pt}
+\begin{lemma} If a differentiation equals zero on an invertible element, then it is identically zero.
+Let $d(f) = 0$ for some nonconstant $f \in R$:
+\[
+d(x) = d(f^{-1} \circ f) = d(f^{-1}) \circ f \cdot d(f) = 0
+\]
+So, for any $g \in R$:
+\[
+d(g) = d(x \circ g) = d(x) \circ g \cdot d(g) = 0
+\]
+- since zero is a constant by Lemma 2.1 $\square$
+\end{lemma}
+
+In what follows, we assume that all differentiations are not identically zero.
+
+\begin{lemma} It is easy to see that the kernel of a differentiation forms a compositional subgroup.
+
+\vspace{10pt}
+\textbf{Proof.} Let $\langle R, \cdot, \circ \rangle$ be a rring and let d be a differentiation. Let $f, g \in \ker(d)$.
+
+\vspace{5pt}
+$\mathrm{id}$ in $\ker(d)$:
+
+\[
+d(\mathrm{id}) = d(\mathrm{id} \circ \mathrm{id}) = d(\mathrm{id}) \circ \mathrm{id} \cdot d(\mathrm{id}) = d(\mathrm{id}) \cdot d(\mathrm{id})
+\]
+
+\[
+1 = d(\mathrm{id})
+\]
+
+\vspace{5pt}
+Compositional inverses are in $\ker(d)$, since 1 is a constant:
+
+\[
+1 = d(\mathrm{id}) = d(f \circ f^{-1}) = d(f) \circ f^{-1} \cdot d(f^{-1}) = d(f^{-1})
+\]
+
+\vspace{5pt}
+$\ker(d)$ closed under multiplication:
+
+\[
+d(f \circ g) = d(f) \circ g \cdot d(g) = 1 \quad \square
+\]
+
+\end{lemma}
+
+
+\vspace{10pt}
+\begin{lemma} On the kernel of a differentiation.
+
+\vspace{5pt}
+\noindent Let $\langle R, \cdot, \circ \rangle$ be a rring and let \(d: R \to R\) be a differentiation. Then for any \(f, g \in R\),
+
+\[
+d(f) = d(g) \quad \iff \quad \exists k \in \ker(d) \colon  f = k \circ g
+\]
+
+\vspace{5pt}
+\textbf{Proof.} Let \(d(f) = d(g)\) for some \(f, g \in R\), then:
+\[
+d(f \circ g^{-1}) = d(f) \circ g^{-1} \cdot d(g^{-1}) = d(g) \circ g^{-1} \cdot d(g^{-1}) 
+\]
+\[
+= d(g \circ g^{-1}) = d(\mathrm{id}) = 1,
+\]
+
+so, \(f = (f \circ g^{-1}) \circ g\) and f $\circ g^{-1} \in \ker(d)$
+
+\vspace{5pt}
+\textbf{Conversely}, let $f = k \circ g$ for some $k \in \ker(d)$,
+\[
+d(f) = d(k \circ g) = d(k) \circ g \cdot d(g) = (1 \circ g) \cdot d(g) = d(g) \quad \square
+\]
+\end{lemma}
+
+\noindent\textbf{Remark.} The statement of Lemma 2.6 is equivalent to the homomorphism theorem from group theory. 
+However, the composition group \(R\) cannot always be factored by the kernel, since, 
+unlike the kernel of a homomorphism, the kernel of a differentiation is not necessarily normal:
+\[
+d(f \circ k \circ f^{-1}) = d(f) \circ k \circ f^{-1} \cdot d(k \circ f^{-1}) = d(f) \circ k \circ f^{-1} \cdot d(f^{-1})
+\]
+
+So, $f \circ k \circ f^{-1} \notin \ker(d)$ in general.
+
+\vspace{10pt}
+\begin{definition}
+We call the kernel of a differentiation \textbf{trivial} if \(\ker(d) = \{\mathrm{id}\}\).
+\end{definition}
+
+\vspace{10pt}
+\vspace{10pt}
+\textbf{Corollary of Lemma 2.6.} The kernel of a differentiation is trivial \textbf{if and only if} the differentiation is injective.
+
+\vspace{5pt}
+\textbf{Proof.} If \(\ker(d)\) is nontrivial, then there exists \(f \neq \mathrm{id}\) with 
+\(d(f) = 1 = d(\mathrm{id})\), so \(d\) is not injective. Conversely, suppose \(d\) is not injective, 
+so there exist \(f, g \in R\) with \(f \neq g\) and \(d(f) = d(g)\). By the lemma, $d(f \circ g^{-1}) = 1$, 
+but \(f \neq g\), so we have \(f \circ g^{-1} \neq \mathrm{id}\), and \(\ker(d)\) is nontrivial. $\square$
+
+
+\vspace{10pt}
+\begin{definition} Let $\langle R, \cdot, \circ \rangle$ be a rring and let $d: R \to R$ be a differentiation. 
+    An element $e \in R$ is called an \textbf{exponential element of $d$} if it is a 
+    fixed point of $f$, i.e., $d(e) = e$ and e is nonconstant. We call the compositional inverse of the 
+    exponential element the logarithm: $\ln \circ \ e = e \circ \ln = \mathrm{id}$
+\end{definition}
+
+\vspace{10pt}
+\noindent\textbf{Remark.} As for constant exponentials, the situation is very simple. 
+The only such exponentials of a differentiation can be \(1\) or \(0\). 
+Let \(c\) be a constant exponential of \(d\) (not equal to \(1\) or \(0\)), that is, \(d(c) = c\). Then:
+\[
+c = d(c) = d(c \circ c) = d(c) \circ c \cdot c = c \cdot c
+\]
+
+In particular, \(0\) and \(1\) are the only constant operators that are differentiations.
+On the other hand, if a differentiation maps some constant elements to 1, or, in other words, 
+if the kernel of a differentiation contains constants, then the differentiation is identically equal to 1. 
+Let d(c) = 1 and $f \in R$:
+\[
+1 = d(c) = d(c \circ f) = d(c) \circ f \cdot d(f) =  d(f)
+\]
+
+Thus, the only constant exponential of a nontrivial differentiation can be zero.
+
+\vspace{10pt}
+\section{Theorem 1. On Bijection}
+
+Let $\langle R, \cdot, \circ \rangle$ be a right ring and let \(d\) be a differentiation of \(R\) with an exponential \(e\). 
+Let \(E\) be the set of all exponentials of \(d\). Then there exists a bijection \(\varphi: \ker(d) \to E \), given by:
+
+\[
+\varphi(k) = e \circ k
+\]
+
+\vspace{10pt}
+\textbf{Proof.} We first verify that \(\varphi\) indeed maps elements of the kernel $\ker(d)$ to the set of exponentials $E$.
+Let $k \in \ker(d)$, then:
+
+\[
+d(\varphi(k)) = d(e \circ k) = d(e) \circ k \cdot d(k) = e \circ k
+\]
+
+\newpage
+- so $\varphi(k)$ is indeed an exponential of $d$. It is easy to verify that the 
+inverse of \(\varphi\) is the map \(\psi: E \to \ker(d)\) given by $\psi(e') = \ln \circ e'$, where \(\ln\) is the logarithm of \(e\):
+
+\[
+\psi(\varphi(k)) = \ln \circ (e \circ k) = k, \quad \varphi(\psi(e')) =  e \circ (\ln \circ e') = e'
+\]
+
+To verify that \(\varphi\) is surjective, we show that \(\psi\) indeed maps exponential elements into the kernel.
+Let $e'$ is some exponential of $d$. By Theorem 4 from \cite{umerov2025}, it follows that $d(\ln) = \frac{1}{\mathrm{id}}$, so:
+
+\[
+d(\psi(e'))  = d(\ln \circ e') = d(\ln) \circ e' \cdot d(e') = \frac{1}{e'} \cdot e' = 1
+\]
+
+Therefore, \(\varphi\) and \(\psi\) are bijections, and \(|\ker(d)| = |E|\). $\blacksquare$
+
+\vspace{10pt}
+\textbf{Remark.} $\frac{1}{\mathrm{id}} \circ f = \frac{1}{f}$ follows from the fact that 1 is a 
+constant and that composition is distributive over multiplication:
+
+\[
+(\frac{1}{\mathrm{id}} \cdot \mathrm{id}) \circ f = 1
+\]
+
+\vspace{10pt}
+\textbf{Remark.} The theorem does not cover constant exponentials, since its proof uses the logarithm, 
+which a constant exponential obviously cannot have.
+
+\vspace{10pt}
+\textbf{Remark.} The bijection \(\varphi\) is non-canonical, as it depends on the choice of the fixed exponential \(e\). 
+For any other exponential \(\tilde{e} = e \circ h\) with \(h \in \ker(d)\), the corresponding bijection \(\tilde{\varphi}\) 
+satisfies \(\tilde{\varphi}(f) = \varphi(h \circ f)\). 
+Thus, all such bijections differ from each other by composition with elements of the kernel group. 
+
+\begin{definition}
+Let \(\langle R, \cdot, \circ \rangle\) be a right ring and let \(C\) be the ideal of its constants. 
+We call a differentiation \(d\) of \(R\) a \textbf{derivative} if its set of exponentials \(E\) is 
+nonempty and for any \(e_1, e_2 \in E\), \(e_1 / e_2 \in C\).
+\end{definition}
+
+
+
+\newpage
+\vspace{10pt}
+\begin{lemma} On the embedding
+
+\vspace{5pt}
+Let \(\langle R, \cdot, \circ \rangle\) be a right ring, let \(d\) be a \textbf{derivative} on \(R\), 
+and let \(E\) be the set of exponentials of \(d\). Suppose there exists \(e \in E\) such that \(e \circ 0 = 1\). 
+Then the composition group of the \textbf{kernel} embeds \textbf{into} the multiplicative group 
+of the \textbf{constants} via an injective homomorphism 
+\(\theta: \langle \ker(d), \circ \rangle \hookrightarrow \langle C, \cdot \rangle\) 
+given by \(\theta(k) = e \circ k \circ 0\).
+
+
+\vspace{10pt}
+\textbf{Proof.}
+
+Define the function \(b: \ker(d) \to C\) by
+\[
+\text{(1)} \quad b(k) = \frac{e \circ k}{e} 
+\]
+On the one hand, the bijection theorem shows that \(e \circ k\) is an exponential for 
+any \(k \in \ker(d)\). On the other hand, \(d\) is a derivative, so the quotient 
+of any two of its exponentials is a constant. Hence, \(b\) indeed maps the kernel into \(C\).
+
+\vspace{10pt}
+Also, it follows from the bijection theorem that \(b\) \textbf{is injective}. 
+By the theorem, the exponential \(e\) defines a bijection \(\varphi\) between the kernel and the set of exponentials. 
+Therefore, for all \(k_1, k_2 \in \ker(d)\),
+\[
+b(k_1) = b(k_2) \iff \frac{e \circ k_1}{e} = \frac{e \circ k_2}{e} \iff \frac{\varphi(k_1)}{e} = \frac{\varphi(k_2)}{e}
+\]
+
+so \(k_1 = k_2\) by the injectivity of \(\varphi\).
+
+\vspace{10pt}
+We now show that \(b\) is a \textbf{multiplicative homomorphism}. It is easy to see that, 
+by reasoning analogous to Lemma~2.1, the constants form a multiplicative subgroup in a right ring, 
+just as they form a subfield in a triangular rring. By the definition of \(b\), for all $k$ in $\ker(d)$:
+\[
+\text{(2)} \quad e \circ k = b(k) e
+\]
+
+Let \(k, t \in \ker(d)\). Since the kernel is a composition group, and by (2),
+\[
+\text{(3)} \quad e \circ k \circ t = b(k \circ t) e
+\]
+
+\vspace{10pt}
+Now compositionally multiply (2) on the right by \(t\):
+\[
+e \circ k \circ t = (b(k) e) \circ t = (b(k) \circ t)(e \circ t)
+\]
+
+--- by distributivity, and since \(b(k)\) is a constant,
+\[
+= b(k) (e \circ t)
+\]
+
+But \(e \circ t = b(t) e\) by (2). Therefore,
+\[
+e \circ k \circ t = b(k) b(t) e
+\]
+
+Equating this with (3),
+\[
+b(k \circ t) e = b(k) b(t) e
+\]
+
+and dividing by \(e\), we obtain the multiplicativity of \(b\):
+\[
+b(k \circ t) = b(k) b(t)
+\]
+
+\vspace{10pt}
+It \textbf{remains to show} that \(\theta(k) = b(k)\) for any \(k \in \ker(d)\). 
+To this end, compositionally multiply (1) on the right by \(0\):
+\[
+b(k) \circ 0 = \left( \frac{e \circ k}{e} \right) \circ 0 = \frac{e \circ k \circ 0}{e \circ 0}
+\]
+
+Since \(b(k)\) is a constant, and \(e \circ 0 = 1\) by the hypothesis of the lemma,
+\[
+b(k) = e \circ k \circ 0
+\]
+
+Thus,
+\[
+\theta(k \circ t) = e \circ k \circ t \circ 0 = b(k \circ t) = b(k) b(t) 
+\]
+\[
+= (e \circ k \circ 0)(e \circ t \circ 0) = \theta(k) \theta(t)
+\]
+--- indeed an embedding of the kernel into the constants. $\square$
+
+\end{lemma}
+
+\vspace{10pt}
+\begin{definition} 
+Let \(\langle R, +, \cdot, \circ \rangle\) be a triangular rring and let \(d\) be a differentiation of $R$.
+We call an exponential \(e\) of a differentiation \(d\) \textbf{multiplicative} if for all \(f, g \in R\)
+\[
+e \circ (f + g) = (e \circ f) \cdot (e \circ g).
+\]
+\end{definition}
+
+\vspace{10pt}
+\begin{definition}
+Let \(\langle R, \cdot, \circ \rangle\) be a right ring and let \(C\) be the ideal of its constants. 
+We call \(R\) \textbf{constant-extensional} or \textbf{C-extensional} if for any \(f, g \in R\),
+\[
+\forall c \in C: f \circ c = g \circ c \quad \implies \quad f = g.
+\]
+\end{definition}
+
+\vspace{10pt}
+\noindent\textbf{Remark.} The converse implication holds automatically by the definition of composition as an operation.
+
+\vspace{10pt}
+\begin{definition}
+Let \(\langle R, +, \cdot, \circ \rangle\) be a triangular rring. We call \(R\) 
+\textbf{C-extensional} if \(\langle R, \cdot, \circ \rangle\) is \(C\)-extensional.
+\end{definition}
+
+
+
+\vspace{10pt}
+\section{Theorem 2. On the exponential of a linear differentiation}
+
+Let $\langle R, +, \cdot, \circ \rangle$ be a C-extensional triangular rring. Let \(C\) be the ideal of its constants and let \(d\) 
+be a linear differentiation which is not identically zero and such that there exists \(c \in C\) with \(d(c) = 0\). 
+Let \(E\) be the set of all exponentials of \(d\) and let \(E\) is not empty. Then the following are equivalent:
+\begin{enumerate}
+\item[(i)] \(d\) has a multiplicative exponential $e$
+\item[(ii)] for any \(e_{1}, e_{2} \in E\), \(e_{1}/e_{2} \in C\)
+\end{enumerate}
+
+\vspace{10pt}
+\noindent\textbf{Remark.} Condition~(ii) is equivalent to \(E\) being a subset of a one-dimensional linear subspace of \(R\) over \(C\); 
+in other words, all exponentials lie on a single ray over \(C\).
+
+\vspace{10pt}
+\begin{lemma} If a differentiation \(d\) has a constant \(c\) such that \(d(c) = 0\), 
+    then for any constant \(t \in C\), \(d(t) = 0\):
+\[
+d(t) = d(t \circ c) = d(t) \circ c \cdot d(c) = 0 \quad \square
+\]
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma} \(\ker(d) = \{\mathrm{id} + c \mid c \in C\}\).
+
+\vspace{10pt}
+\textbf{Proof.} Let \(c \in C\). By linearity and Lemmas~4.1 and~2.5
+
+(\(\mathrm{id}\) is the identity element of the composition subgroup \(\ker(d)\)):
+\[
+d(\mathrm{id} + c) = d(\mathrm{id}) + d(c) = 1 + 0 = 1,
+\]
+
+so \(\mathrm{id} + c \in \ker(d)\).
+
+\vspace{10pt}
+\textbf{Conversely}, let \(f \in \ker(d)\), that is, \(d(f) = 1\). 
+
+By Lemma~2.5 and linearity,
+\[
+d(f) = 1 = d(\mathrm{id}) \implies d(f - \mathrm{id}) = 0.
+\]
+
+Since \(d\) is not identically zero, by Lemma~2.4, \(f - \mathrm{id} \in C\). 
+
+Hence \(f = \mathrm{id} + c\) for some constant \(c \in C\). $\square$
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma}
+Let \(e\) be a multiplicative exponential of \(d\). Then for any \(c \in C\), \(e \circ c \neq 0\).
+
+\vspace{5pt}
+\textbf{Proof.} Suppose there exists \(c \in C\) such that \(e \circ c = 0\). 
+
+Then, on the one hand,
+\[
+e \circ 0 = e \circ (0 + 0) = (e \circ 0) \cdot (e \circ 0),
+\]
+
+hence \(e \circ 0 = 1\). On the other hand,
+\[
+e \circ 0 = e \circ (c - c) = (e \circ c) \cdot (e \circ [-c]) = 0 \cdot (e \circ [-c]) = 0.
+\]
+
+This gives a contradiction \(0 = 1\). $\square$
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma}
+We show that (i) implies (ii).
+
+\vspace{10pt}
+\textbf{Proof.} Let \(e\) be a multiplicative exponential of \(d\) and let \(e_1, e_2 \in E\). 
+By the bijection theorem and Lemma~4.2, there exist \(c_1, c_2 \in C\) such that
+\[
+e_1 = e \circ (\mathrm{id} + c_1), \quad e_2 = e \circ (\mathrm{id} + c_2).
+\]
+
+By the multiplicativity of \(e\),
+\[
+e_1 = (e \circ \mathrm{id}) \cdot (e \circ c_1), \quad e_2 = (e \circ \mathrm{id}) \cdot (e \circ c_2).
+\]
+
+In Lemma~3.10 of \cite{umerov2025}, we showed that the constants form a two-sided ideal 
+in \(\langle R, \cdot, \circ \rangle\); hence \(e \circ c_1, e \circ c_2 \in C\). 
+On the other hand, \(e \circ c_1, e \circ c_2 \neq 0\) by Lemma~4.3, so they are invertible, 
+and we can express \(e \circ \mathrm{id}\) from both sides and equate:
+\[
+\frac{e_1}{e \circ c_1} = \frac{e_2}{e \circ c_2} \implies \frac{e_1}{e_2} = \frac{e \circ c_1}{e \circ c_2} \in C,
+\]
+
+- since the constants form a subfield of \(\langle R, +, \cdot \rangle\) by Lemma~2.1. $\square$
+\end{lemma}
+
+
+
+\vspace{10pt}
+\begin{lemma} Let \(e\) be an exponential of \(d\) and \(\forall e_1, e_2 \in E \colon e_1 / e_2 \in C\). 
+Then \(E = \{ c e \mid c \in C \setminus \{0\} \}\).
+
+\vspace{10pt}
+\textbf{Proof.} Clearly, \(E \subseteq \{ c e \mid c \in C \}\), since for any \(e' \in E\), by condition of the lemma, 
+\[
+e'/e \in C\ \quad  \text{i.e.} \quad  \exists c \in C \colon e' = c e
+\]
+
+Let us show that \(\{ c e \mid c \in C \setminus \{0\} \} \subseteq E\). Let \(c \in C\). Then, by the linearity of \(d\),
+\[
+d(c e) = c \, d(e) = c e,
+\]
+
+so \(c e \in E\). We exclude \(0\), since it is constant and therefore not an exponential by definition. 
+The remaining elements are not constant since \(c e = c'\) implies \(e = c'/c \in C\), as \(C\) is a field by Lemma~2.1. $\square$
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma} Let \(e'\) be an exponential of \(d\) and \(\forall e_1, e_2 \in E \colon e_1 / e_2 \in C\).
+Let us show that \(d\) has an exponential \(e\) that is multiplicative on \(C\).
+
+\vspace{10pt}
+\textbf{Proof.} 
+Since \(R\) is \(C\)-extensional, there exists \(\gamma \in C\) such that \(e' \circ \gamma \neq 0\); otherwise \(e' = 0\) 
+and would not be an exponential by definition. By the bijection theorem and Lemma~4.2, \(e_\gamma = e' \circ (\mathrm{id} + \gamma)\) 
+is an exponential and
+
+\[
+e_\gamma \circ 0 = e' \circ (\mathrm{id} \circ 0 + \gamma \circ 0) = e' \circ (0 + \gamma) \neq 0.
+\]
+
+\vspace{5pt}
+Let \(e = e_\gamma / (e_\gamma \circ 0)\). Note that \(e_\gamma \circ 0\) is a nonzero constant, since the constants form a 
+two-sided ideal by Lemma~3.10 of \cite{umerov2025}; hence \(e\) is an exponential by Lemma~4.5, and
+
+\[
+e \circ 0 = (e_\gamma / (e_\gamma \circ 0)) \circ 0 = (e_\gamma \circ 0) / (e_\gamma \circ 0) = 1.
+\]
+
+\vspace{5pt}
+Since \(e \circ 0 = 1\) and \(d\) is \textbf{a derivative} by the hypothesis of the lemma, by Lemma~3.2, 
+\(e\) defines an embedding \(\theta\) of the kernel into the constants. Let \(\mathrm{id} + a, \mathrm{id} + c \in \ker(d)\). 
+Then, by Lemma~3.2:
+\[
+e \circ [\mathrm{id} + a] \circ [\mathrm{id} + c] \circ 0 = (e \circ [\mathrm{id} + a] \circ 0)(e \circ [\mathrm{id} + c] \circ 0).
+\]
+
+Expanding by the distributivity of composition over addition, and noting that \(a, c\) are constants, we obtain
+\[
+e \circ (c + a) = (e \circ a)(e \circ c). \quad \square
+\]
+
+\end{lemma}
+
+\vspace{15pt}
+\noindent Thus, we have shown that \(d\) has an exponential \(e\) that is multiplicative on \(C\). 
+To complete the proof of the theorem, it remains to extend its multiplicativity property to all of \(R\). 
+This follows from the \(C\)-extensionality of \(R\).
+
+\vspace{10pt}
+\begin{lemma} Let \(e'\) be an exponential of \(d\) and \(\forall e_1, e_2 \in E \colon e_1 / e_2 \in C\).
+We show that \(d\) has a multiplicative exponential \(e\); that is, (ii) \(\implies\) (i).
+
+\vspace{10pt}
+\textbf{Proof.} In Lemma~4.6 we showed that \(d\) has an exponential \(e\) that is multiplicative on constants. 
+Using this, we show that for any \(c \in C\),
+\[
+e \circ (f + g) \circ c = [(e \circ f) \cdot (e \circ g)] \circ c
+\]
+
+Let $f, g \in R$ and let \(c \in C\). \textbf{Then}:
+\[
+e \circ (f + g) \circ c = e \circ (f \circ c + g \circ c)
+\]
+
+Since \(f \circ c, g \circ c \in C\) (as \(C\) is an ideal), we get:
+\[
+= (e \circ f \circ c) \cdot (e \circ g \circ c) = [(e \circ f) \cdot (e \circ g)] \circ c
+\]
+
+--- by distributivity. Hence, by \(C\)-extensionality,
+\[
+e \circ (f + g) = (e \circ f) \cdot (e \circ g)
+\]
+
+This completes the proof of the theorem. $\blacksquare$
+
+\end{lemma}
+
+
+\newpage
+\noindent\textbf{Corollary of Theorem~2.}
+By Theorem~2 and Theorem~6 of \cite{umerov2025}, the following statements are equivalent 
+for a linear differentiation that has an exponential and a zero at some point:
+\begin{itemize}
+\item all exponentials of \(d\) lie on a single ray over \(C\);
+\item \(d\) has a multiplicative exponential;
+\item \(d\) satisfies the Leibniz rule.
+\end{itemize}
+
+This indicates a critical error in the remark following Theorem~3 of \cite{umerov2025} --- our classification 
+of linear differentiations over real functions was wrong. Clearly, the exponentials of the linear operators \(d(x^n) = n^k x^{n-1}\) 
+given in that paper lie on a single ray by linearity. This means that if these operators were indeed differentiations, 
+then each of them would have a multiplicative exponential, and they would themselves satisfy the Leibniz rule. 
+In turn, the Leibniz rule uniquely determines a differentiation on the basis 
+by induction as \(d(x^n) = n x^{n-1} \cdot d(x) = n x^{n-1}\). 
+Therefore, the operators from \cite{umerov2025} are not differentiations for \(k \neq 1\).
+
+\vspace{5pt}
+However, we have decided not to correct the paper ``On Algebraic Integral'' and to leave everything as it is 
+--- the hypothesis on the existence of many linear differentiations seems too beautiful to simply delete it. 
+Moreover, one cannot rule out that there exist worlds in which this hypothesis turns out to be true after all 
+(who knows what universes with Heyting logic may delight us with), and perhaps one day we will be able to pass this 
+knowledge on to them, unless Academia finally destroys science and civilization in this world before then.
+
+\vspace{5pt}
+There is nothing wrong with mistakes. For example, the curious identity in this paper was obtained as a result of 
+my failing to solve an elementary differential equation for several days. And if humanity ever again has a system that 
+truly engages in education rather than solving various political problems, I think that in such a system mistakes will 
+be encouraged, and not punished at all.
+
+\newpage
+\section{Some differentiations of triangular rrings}
+
+The correct classification of differentiations over \(\mathrm{C}^1(\mathbb{R})\) was given by S.~Artstein-Avidan, H.~K\"onig, 
+and V.~Milman in the paper ``The chain rule as a functional equation'' \cite{Artstein-Avidan2010}.
+By the classification of solutions to the functional equation
+\[
+d(f\circ g)=d(f)\circ g \cdot d(g),
+\]
+where \(d:\mathrm{C}^1(\mathbb{R})\to \mathrm{C}(\mathbb{R})\), every such differentiation is of the form:
+\[
+d(f)=\frac{H\circ f}{H}\,|f'|^p,
+\qquad p\ge0,
+\]
+where \(H\) is a positive continuous function. Moreover, for \(p>0\) there is an additional family of solutions given by
+\[
+d(f)=\frac{H\circ f}{H}\,|f'|^p\operatorname{sgn}(f').
+\]
+
+\vspace{10pt}
+However, their classification, while likely correct, is substantially incomplete from an algebraic point of view. 
+The authors explicitly use the fact that the domain of the differentiable functions is all of \(\mathbb{R}\). 
+At the same time, it is easy to see that the number of such functions forming a triangular rring is rather small and, 
+strictly speaking, not very suitable for calculus --- for example, the sine function is compositionally invertible 
+only on the interval \([-\frac{\pi}{2}, \frac{\pi}{2}]\), and we cannot use the arcsine in differential and integral 
+computations if we restrict ourselves in this way.
+
+\vspace{10pt}
+\begin{definition} Let $\langle R, +, \cdot, \circ \rangle$ be a C-extensional triangular rring and let \(C\) be 
+    the ideal of its constants. We call a linear differentiation of \(R\) a \textbf{derivative} if it has a zero 
+    at some point and a nonempty set of exponentials such that all its exponentials lie on a single ray over \(C\).
+    We denote such a differentiation by \(d(f) = f'\).
+\end{definition}
+
+
+
+\begin{lemma}
+Let \(\langle R, \cdot, \circ \rangle\) be a right ring and let \(C\) be the ideal of its constants. 
+Then a differentiation \(d\) of \(R\) has no zeros \textbf{iff} it is of the form:
+
+\[
+d(f) = \frac{H}{H \circ f}
+\]
+--- where \(H \in (R \setminus \{0\})\). 
+
+\vspace{10pt}
+\textbf{Proof.} 
+
+On the one hand, by Lemma~2.4, if a differentiation has a zero at a nonconstant point, 
+it is identically zero, and we exclude it from consideration. On the other hand, by Lemma~4.1, 
+if a differentiation is not equal to zero on all constants, then it is not equal to zero at any constant. 
+Let \(d\) be a differentiation and let \(c \in C\). Then
+
+\[
+d(c) = d(c \circ f) = d(c) \circ f \cdot d(f)
+\]
+
+Since \(d(c)\) is nonzero, it is multiplicatively invertible, and hence \(d(f)\) is uniquely determined 
+by the value \(d(c) = H\). Thus,
+\[
+d(f) = \frac{H}{H \circ f}
+\]
+
+\textbf{Conversely}, let \(d\) be of this form. Then for any \(f, g \in R\),
+\[
+d(f) \circ g \cdot d(g) = \left( \frac{H}{H \circ f} \circ g \right) \cdot \frac{H}{H \circ g} 
+\]
+
+\[
+= \frac{H \circ g}{H \circ f \circ g} \cdot \frac{H}{H \circ g} = \frac{H}{H \circ f \circ g} = d(f \circ g)
+\]
+
+Thus, \(d\) is indeed a differentiation. Assuming that \(d\) has a zero at some constant \(c\) leads to a contradiction:
+\[
+\frac{H}{H \circ c} = 0 \implies H = 0,
+\]
+
+and \(d = 0/0\) $\square$
+\end{lemma}
+
+\begin{lemma}
+Let \(R\) be a right ring. Then its differentiations form a multiplicative group.
+
+\vspace{10pt}
+\textbf{Proof.} 
+Let \(f, g \in R\) and let \(d, p\) be differentiations of \(R\). We show that \(q = d / p\) is also a differentiation:
+\[
+q(f \circ g) = \frac{d(f \circ g)}{p(f \circ g)} = \frac{d(f) \circ g \cdot d(g)}{p(f) \circ g \cdot p(g)} 
+\]
+
+\[
+= \left( \frac{d(f)}{p(f)} \circ g \right) \cdot \frac{d(g)}{p(g)} = q(f) \circ g \cdot q(g) \quad \square
+\]
+
+\end{lemma}
+
+\vspace{10pt}
+\begin{lemma}
+Let \(\langle R, +, \cdot, \circ \rangle\) be a C-extensional triangular rring and let \({}': R \to R\) be a derivative.
+Then operators of the following form are differentiations:
+\[
+d(f) = \frac{H}{H \circ f} \cdot (f')^z
+\]
+for \(H \in (R \setminus \{0\})\), \(z \in \mathbb{Z}\).
+
+\vspace{10pt}
+\textbf{Proof.} 
+follows directly from Lemmas~5.2 and~5.3 $\square$
+\end{lemma}
+
+\vspace{10pt}
+\noindent\textbf{Remark.}
+It is easy to see that all operators of the form \((H / H \circ f)^z\), \(z \in \mathbb{Z}\), 
+cannot have zeros if \(\langle R, +, \cdot \rangle\) is an integral domain, 
+so they reduce to \(\widetilde{H} / \widetilde{H} \circ f\) by Lemma~5.2.
+
+\vspace{10pt}
+\noindent\textbf{Remark.}
+Note that the classification in \cite{Artstein-Avidan2010} does not account for 
+differentiations with \(p < 0\), due to the domain of the operators considered there.
+
+\vspace{10pt}
+\noindent\textbf{Remark.}
+The complete classification of differentiations of triangular rrings remains a subject of further research for our community.
+
+\vspace{10pt}
+The classification of exponentials and kernels of the differentiations from Lemma~5.4 is nontrivial. 
+If the equation
+\[
+\frac{H}{H \circ f} \cdot (f')^z = \frac{1}{\mathrm{id}}
+\]
+is solvable for all \(H, z\), the only differentiation of this form that has no exponential is \(d(f) = f/x\).
+
+
+\vspace{10pt}
+\begin{lemma}
+Let the equation
+\[
+\frac{H}{H \circ f} \cdot (f')^z = \frac{1}{\mathrm{id}}
+\]
+
+have a solution \(f\) for every choice of \(H\) and \(z\). Let \(d\) be a differentiation of the form
+\[
+d(f) = \frac{H}{H \circ f} \cdot (f')^z
+\]
+
+and suppose \(d\) has no exponential. Then \(d(f) = f/x\).
+
+\newpage
+\textbf{Proof.} 
+
+By Theorem~4 of \cite{umerov2025}, a differentiation has no exponential if and only if the preimage of the element \(1/\mathrm{id}\) 
+is empty or consists of constants. By the assumption of the lemma, we suppose it is never empty, hence, 
+\(d\) has no exponential only if there exists a constant \(c\) such that
+\[
+d(c) = \frac{H}{H \circ c} \cdot (c')^z = \frac{1}{\mathrm{id}}.
+\]
+
+Since the derivative vanishes on constants, the equation has a solution \(H\) only for \(z = 0\) and reduces to
+\[
+\frac{H}{H \circ c} = \frac{1}{\mathrm{id}}.
+\]
+
+\[
+H = \frac{H \circ c}{\mathrm{id}}.
+\]
+
+\(H \circ c\) is a constant, since \(C\) is an ideal. Denoting it by \(t\), we get \(H = t / \mathrm{id}\), and
+
+\[
+d(f) = \frac{t / \mathrm{id}}{(t / \mathrm{id}) \circ f} = \frac{t / \mathrm{id}}{t / f} = f / \mathrm{id}. \quad \square
+\]
+\end{lemma}
+
+
+\vspace{10pt}
+\noindent\textbf{Remark.}
+It is easy to verify that this differentiation is also linear, on a par with the derivative.
+Of particular interest are differentiations of the form
+\[
+d(f) = \left( \frac{f}{\mathrm{id}} \right)^m \cdot (f')^z, \qquad m, z \in \mathbb{Z}.
+\]
+That they are indeed differentiations follows immediately from the distributivity of composition over multiplication, 
+by the converse part of Theorem~2 of \cite{umerov2025} and Lemma~5.3. These differentiations correspond to \(H = \mathrm{id}^m\):
+\[
+\frac{\mathrm{id}^m}{\mathrm{id}^m \circ f} = \frac{\mathrm{id}^m}{f^m} = \left( \frac{f}{\mathrm{id}} \right)^{-m}.
+\]
+
+\vspace{10pt}
+The classification of exponentials and kernels of such differentiations is not a difficult task. However, 
+it requires a careful introduction of the notion of an antiderivative, 
+which lies beyond the scope of this paper. Moreover, such differentiations 
+satisfy the functional identity discussed in the remark following Theorem~3 of \cite{umerov2025}:
+\[
+\theta(pq) x^{\psi(pq)} = \theta(p) x^{\psi(p) q} \cdot \theta(q) x^{\psi(q)}.
+\]
+
+--- where \(\psi\) is a crossed-homomorphism and \(\varphi\) is a multiplicative homomorphism. Operators of the form
+\[
+d(f) = \left( \frac{f}{\mathrm{id}} \right)^m \cdot (f')^z
+\]
+
+are the only solution we have been able to find so far:
+\[
+d(x^q) = \left( \frac{x^q}{x} \right)^m \cdot ([x^q]')^z = x^{m(q-1)} \cdot (q x^{q-1})^z 
+\]
+
+\[
+= q^z x^{m(q-1) + z(q-1)} = q^z x^{(m+z)(q-1)}
+\]
+However, it seems likely that among them only the derivative and \(f/\mathrm{id}\) are linear. 
+We cannot assert the uniqueness of such a solution, since all we have been able to prove so far 
+about the continuation of differentiations is Theorem~3 of \cite{umerov2025}, as well as the following lemma.
+
+\vspace{10pt}
+\begin{lemma} On the extension of a differentiation within an injective subgroup
+
+\vspace{5pt}
+Let \(\langle R, \cdot, \circ \rangle\) be a right ring and let $D$ be a subgroup of its 
+differentiations such that every $d \neq 1$ in $D$ is injective. Then, any differentiation in $D$ is uniquely 
+determined by its value at a single element $f \in (R \setminus \{\mathrm{id}\})$. That is,
+\[
+\forall d, p \in D, \quad \exists f \in (R \setminus \{\mathrm{id}\}) : d(f) = p(f) \implies d = p.
+\]
+
+\vspace{10pt}
+\textbf{Proof.} 
+Let \(d, p \in D\) and let \(f \in R \setminus \{\mathrm{id}\}\) be such that \(d(f) = p(f)\). 
+Let \(q = d/p \in D\). Then \(q(f) = 1\). However, by Lemma~2.5, \(q(x) = 1 = q(f)\). 
+Hence \(q\) is not injective, so \(q = 1\) and \(d = p\). $\square$
+\end{lemma}
+
+\newpage
+\noindent\textbf{Example.} For example, it is easy to verify that differentiations having no zeros form a subgroup 
+if \(\langle R, +, \cdot \rangle\) is an integral domain. On the other hand, from Lemma~5.2 it is easy to see 
+that the kernels of such differentiations are trivial:
+\[
+\frac{H}{H \circ f} = 1 \implies H = H \circ f
+\]
+
+that is, the only solution is \(f = \mathrm{id}\). Hence, by the corollary of Lemma~2.6, all of 
+them except the identity \(1\) are injective and are uniquely determined by their value at a single point.
+
+\section{Conclusion}
+
+Differentiations are truly beautiful.
+
+\vspace{10pt}
+\noindent\textbf{Example 1.} For example, we see that the differentiation 
+\[
+d(f) = \left( \frac{f}{\mathrm{id}} \right)^{-1} f'
+\]
+maps the basis \(x^n\) to \(\mathbb{N}\):
+\[
+\left( \frac{x^n}{x} \right)^{-1} (x^n)' = x^{1-n} \cdot n x^{n-1} = n,
+\]
+
+that is, it is constant on the basis, and hence is a multiplicative homomorphism on it:
+\[
+d(x^n \circ x^m) = d(x^n) \circ x^m \cdot d(x^m) = d(x^n) \cdot d(x^m).
+\]
+
+\vspace{10pt}
+\noindent\textbf{Example 2.} The differentiation 
+\[
+d(f) = \left( \frac{f}{\mathrm{id}} \right) f'
+\]
+
+\vspace{10pt}
+satisfies:
+\[
+d(fg) = d(f) g^2 + f^2 d(g).
+\]
+
+\vspace{10pt}
+By the corollary of Theorem~2, the derivative satisfies the Leibniz rule; therefore,
+\[
+d(fg) = \frac{fg \, (fg)'}{\mathrm{id}} = \frac{fg \, (f'g + fg')}{\mathrm{id}}
+\]
+
+\[
+= \frac{ff' g^2}{\mathrm{id}} + \frac{f^2 gg'}{\mathrm{id}} = d(f) g^2 + f^2 d(g) \quad \square
+\]
+
+\vspace{20pt}
+\noindent\textbf{Curious identity.} Another differentiation
+\[
+d(f) = \left( \frac{f}{\mathrm{id}} \right)^{-1} (f')^2
+\]
+
+satisfies the identity:
+\[
+d(f+g) = \frac{d(fg) + d(f)(f-g) + d(g)(g-f)}{f+g}
+\]
+
+\vspace{10pt}
+\textbf{Proof.} 
+
+\vspace{10pt}
+On the one hand, by the Leibniz rule,
+\[
+d(fg) = \frac{\mathrm{id} \cdot ((fg)')^2}{fg} = \frac{\mathrm{id} \cdot (f'g + fg')^2}{fg}
+\]
+
+\[
+= \frac{\mathrm{id} \cdot ((f'g)^2 + 2f'g f g' + (fg')^2)}{fg} 
+\]
+
+\[
+= \frac{\mathrm{id} \cdot (f')^2 g}{f} + \mathrm{id} \cdot 2f'g' + \frac{\mathrm{id} \cdot (g')^2 f}{g}
+\]
+
+\[
+= d(f)g + \mathrm{id} \cdot 2f'g' + f d(g)
+\]
+
+so that
+\[
+\mathrm{id} \cdot 2f'g' = d(fg) - d(f)g - f d(g)
+\]
+
+\newpage
+\textbf{On the other hand},
+\[
+d(f+g) = \frac{\mathrm{id} \cdot ((f+g)')^2}{f+g}
+\]
+
+that is, by the linearity of the derivative,
+\[
+d(f+g)(f+g) = \mathrm{id} \cdot (f' + g')^2
+\]
+
+\[
+= \mathrm{id} \cdot (f')^2 + \mathrm{id} \cdot 2f'g' + \mathrm{id} \cdot (g')^2
+\]
+
+\[
+= d(f)f + \mathrm{id} \cdot 2f'g' + d(g)g
+\]
+
+so that
+\[
+\mathrm{id} \cdot 2f'g' = d(f+g)(f+g) - d(f)f - d(g)g
+\]
+
+\vspace{10pt}
+\textbf{Equating} the two expressions, we obtain
+\[
+d(f+g)(f+g) - d(f)f - d(g)g = d(fg) - d(f)g - f d(g)
+\]
+
+\[
+d(f+g)(f+g) = d(f)f - d(f)g + d(g)g - d(g)f \quad \square
+\]
+
+\vspace{30pt}
+\noindent These examples prove something far greater than any theorem --- that mathematics is first 
+and foremost the science of the beauty of the world in all its diversity, and the closest sister of aesthetics, 
+and not at all a screwdriver for solving physical problems, as the modern Academy tries to present it.
+However, we shall not despair, knowing that sooner or later such attempts will fail, 
+for nature does not tolerate violence against itself.
+
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{umerov2025}
+N. Umerov,
+\textit{On Algebraic Integral}.
+Zenodo, 2025.
+DOI: 10.5281/zenodo.17376700
+
+\bibitem{umerov2026}
+N. Umerov,
+\textit{On Algebraic Integral For Dummies}.
+Zenodo, 2026.
+DOI: 10.5281/zenodo.19630340
+
+\bibitem{Artstein-Avidan2010}
+S. Artstein-Avidan, H. König, V. Milman, 
+\textit{The chain rule as a functional equation}.
+Sci-Hub, 2010.
+DOI: 10.1016/j.jfa.2010.07.002
+
+\end{thebibliography}
+
+
+\end{document}
